@@ -34,9 +34,9 @@ Trong đó:
 Thuật toán tối ưu hóa dựa trên:
 
 ### **MSE – Mean Squared Error**
-
+$$
 ( MSE = \frac{1}{N} \sum (y_{true} - y_{pred})^2 )
-
+$$
 ---
 
 ## 4. Linear Regression dùng để làm gì?
