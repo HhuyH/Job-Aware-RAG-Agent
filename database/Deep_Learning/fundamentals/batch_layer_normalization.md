@@ -4,7 +4,7 @@ description: Giải thích hai kỹ thuật chuẩn hóa phổ biến trong Deep
 tags: [deep-learning, normalization, training-techniques, fundamentals]
 ---
 
-## 📌 Mô tả cách mình đang xây dựng hệ thống file `.md`
+## Mô tả cách mình đang xây dựng hệ thống file `.md`
 (Để trống hoặc giữ nguyên trong repo — phần này bạn đã chuẩn hóa rồi)
 
 ---
@@ -30,7 +30,7 @@ tags: [deep-learning, normalization, training-techniques, fundamentals]
 
 ## 3. Cách hoạt động bên trong (Internal Logic)
 
-### ✔ Batch Normalization  
+### Batch Normalization  
 Chuẩn hóa từng feature dựa trên thống kê của *cả batch*.
 
 Công thức chuẩn hóa:
@@ -55,7 +55,7 @@ $$
 
 ---
 
-### ✔ Layer Normalization  
+### Layer Normalization  
 Chuẩn hóa theo vector feature của từng sample:
 
 $$

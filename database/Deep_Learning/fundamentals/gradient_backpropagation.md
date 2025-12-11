@@ -25,7 +25,7 @@ tags: [deep-learning, optimization, fundamentals, backpropagation, gradient]
 
 ## 3. Cách hoạt động bên trong (Internal Logic)
 
-### ✔ Gradient của hàm mất mát theo tham số
+### Gradient của hàm mất mát theo tham số
 
 Ví dụ đạo hàm MSE theo trọng số \( w \):
 
@@ -35,23 +35,18 @@ $$
 
 ---
 
-### ✔ Chain Rule – nền tảng Backpropagation
+### Chain Rule – nền tảng Backpropagation
 
 Nếu output \( L \) phụ thuộc nhiều lớp:
 
 $$
 \frac{\partial L}{\partial w} 
-= 
-\frac{\partial L}{\partial a}
-\cdot
-\frac{\partial a}{\partial z}
-\cdot
-\frac{\partial z}{\partial w}
+= \frac{\partial L}{\partial a}\cdot\frac{\partial a}{\partial z}\cdot\frac{\partial z}{\partial w}
 $$
 
 ---
 
-### ✔ Lan truyền qua các lớp Neural Network
+### Lan truyền qua các lớp Neural Network
 
 Xét 1 lớp:
 
@@ -74,13 +69,7 @@ $$
 Gradient đưa về lớp trước:
 
 $$
-\frac{\partial L}{\partial x}
-=
-\frac{\partial L}{\partial a}
-\cdot
-f'(z)
-\cdot
-w
+\frac{\partial L}{\partial x}=\frac{\partial L}{\partial a}\cdotf'(z)\cdot w
 $$
 
 ---
@@ -107,7 +96,7 @@ loss = criterion(outputs, labels)
 loss.backward()   # tính gradient
 optimizer.step()  # cập nhật trọng số
 optimizer.zero_grad()
-````
+```
 
 PyTorch dùng **autograd** để tự động áp dụng chain rule.
 
