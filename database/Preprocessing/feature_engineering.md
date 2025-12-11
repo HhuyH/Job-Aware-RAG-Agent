@@ -21,6 +21,7 @@ x \rightarrow [x, x^2, x^3]
 $$
 
 - Tạo thêm feature từ tương tác: 
+
 $$
 x_1 \cdot x_2
 $$
