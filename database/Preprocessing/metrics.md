@@ -22,9 +22,9 @@ Tài liệu này tổng hợp các metric quan trọng nhất cho **Classificati
 **Định nghĩa**  
 Tỉ lệ dự đoán đúng trên tổng số mẫu.
 
-\[
+$$
 Accuracy = \frac{TP + TN}{TP + FP + FN + TN}
-\]
+$$
 
 **Khi dùng**  
 - Khi dữ liệu cân bằng.
@@ -36,9 +36,9 @@ Accuracy = \frac{TP + TN}{TP + FP + FN + TN}
 
 ## 1.2. Precision
 
-\[
+$$
 Precision = \frac{TP}{TP + FP}
-\]
+$$
 
 **Ý nghĩa:** Trong các mẫu mô hình dự đoán là *positive*, bao nhiêu mẫu là đúng?
 
@@ -49,9 +49,9 @@ Precision = \frac{TP}{TP + FP}
 
 ## 1.3. Recall
 
-\[
+$$
 Recall = \frac{TP}{TP + FN}
-\]
+$$
 
 **Ý nghĩa:** Trong tất cả mẫu *positive thật*, mô hình tìm đúng bao nhiêu?
 
@@ -62,9 +62,9 @@ Recall = \frac{TP}{TP + FN}
 
 ## 1.4. F1-Score
 
-\[
+$$
 F1 = 2 \cdot \frac{Precision \cdot Recall}{Precision + Recall}
-\]
+$$
 
 **Ý nghĩa:** Trung hòa precision và recall.  
 **Khi dùng:**  
@@ -111,9 +111,9 @@ Hữu ích khi dataset **imbalanced**.
 
 ## 1.8. Specificity
 
-\[
+$$
 Specificity = \frac{TN}{TN + FP}
-\]
+$$
 
 **Khi dùng:**  
 - Trường hợp cần giảm false positive.
@@ -122,9 +122,9 @@ Specificity = \frac{TN}{TN + FP}
 
 ## 1.9. Log Loss
 
-\[
+$$
 LogLoss = -\frac{1}{N}\sum (y\log(p) + (1-y)\log(1-p))
-\]
+$$
 
 **Ý nghĩa:**  
 Đánh giá chất lượng **xác suất dự đoán**.
@@ -144,9 +144,9 @@ LogLoss = -\frac{1}{N}\sum (y\log(p) + (1-y)\log(1-p))
 
 ## 2.1. MAE — Mean Absolute Error
 
-\[
+$$
 MAE = \frac{1}{N}\sum |y - \hat{y}|
-\]
+$$
 
 **Ý nghĩa:**  
 Sai số trung bình tuyệt đối.
@@ -159,9 +159,9 @@ Sai số trung bình tuyệt đối.
 
 ## 2.2. MSE — Mean Squared Error
 
-\[
+$$
 MSE = \frac{1}{N}\sum (y - \hat{y})^2
-\]
+$$
 
 **Ý nghĩa:**  
 Phạt sai số lớn mạnh hơn.
@@ -170,9 +170,9 @@ Phạt sai số lớn mạnh hơn.
 
 ## 2.3. RMSE — Root Mean Squared Error
 
-\[
+$$
 RMSE = \sqrt{MSE}
-\]
+$$
 
 **Ý nghĩa:**  
 Sai số trung bình tính theo **đơn vị gốc của biến** → dễ diễn giải hơn MSE.
@@ -181,9 +181,9 @@ Sai số trung bình tính theo **đơn vị gốc của biến** → dễ diễ
 
 ## 2.4. R² Score
 
-\[
+$$
 R^2 = 1 - \frac{SS_{res}}{SS_{tot}}
-\]
+$$
 
 **Ý nghĩa:**  
 Tỉ lệ biến thiên trong dữ liệu được mô hình giải thích.
@@ -198,9 +198,9 @@ Tỉ lệ biến thiên trong dữ liệu được mô hình giải thích.
 
 Điều chỉnh R² khi số lượng feature tăng.
 
-\[
+$$
 Adjusted\ R^2 = 1 - (1-R^2)\frac{n-1}{n-k-1}
-\]
+$$
 
 **Khi dùng:**  
 - Khi so sánh mô hình với số lượng biến khác nhau.
@@ -209,9 +209,9 @@ Adjusted\ R^2 = 1 - (1-R^2)\frac{n-1}{n-k-1}
 
 ## 2.6. MAPE — Mean Absolute Percentage Error
 
-\[
+$$
 MAPE = \frac{100}{N}\sum \left|\frac{y - \hat{y}}{y}\right|
-\]
+$$
 
 **Ý nghĩa:**  
 Sai số trung bình dưới dạng phần trăm.
@@ -226,9 +226,9 @@ Sai số trung bình dưới dạng phần trăm.
 
 Khắc phục một phần điểm yếu của MAPE.
 
-\[
+$$
 SMAPE = \frac{100}{N}\sum \frac{|y-\hat{y}|}{(|y| + |\hat{y}|)/2}
-\]
+$$
 
 **Khi dùng:**  
 - Time series  
