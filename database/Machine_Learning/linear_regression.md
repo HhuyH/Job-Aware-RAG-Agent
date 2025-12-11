@@ -35,8 +35,9 @@ Thuật toán tối ưu hóa dựa trên:
 
 ### **MSE – Mean Squared Error**
 $$
-( MSE = \frac{1}{N} \sum (y_{true} - y_{pred})^2 )
+\text{MSE} = \frac{1}{N} \sum_{i=1}^{N} (y_{true}^{(i)} - y_{pred}^{(i)})^2
 $$
+
 ---
 
 ## 4. Linear Regression dùng để làm gì?
@@ -55,7 +56,10 @@ Dự đoán giá trị liên tục:
 Có thể dùng linear regression để phân loại nhị phân bằng cách:
 
 1. Fit mô hình như bài toán regression
-2. Lấy ngưỡng (threshold) để phân loại, ví dụ: ( y > 0.5 \to 1 ), ngược lại 0.
+2. Lấy ngưỡng (threshold) để phân loại, ví dụ: ( $$
+y > 0.5 \Rightarrow 1
+$$
+ ), ngược lại 0.
 
 Tuy nhiên:
 
