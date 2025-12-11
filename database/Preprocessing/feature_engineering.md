@@ -20,7 +20,8 @@ Ví dụ:
 x \rightarrow [x, x^2, x^3]
 $$
 
-- Tạo thêm feature từ tương tác: $$
+- Tạo thêm feature từ tương tác: 
+$$
 x_1 \cdot x_2
 $$
 
@@ -52,16 +53,20 @@ Tạo feature bằng cách kết hợp **nhiều biến với nhau** để biể
 
 Ví dụ:
 
-* Nhân: ( $$
+* Nhân: 
+$$
 x_1 \cdot x_2
 $$
- )
-* Chia: ( $$
+
+* Chia: 
+$$
 x_1 / x_2
-$$ )
-* Hiệu: ( $$
+$$
+
+* Hiệu: 
+$$
 x_1 - x_2
-$$ )
+$$
 
 ### Khi nào dùng?
 
