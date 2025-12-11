@@ -55,16 +55,19 @@ Tạo feature bằng cách kết hợp **nhiều biến với nhau** để biể
 Ví dụ:
 
 * Nhân: 
+
 $$
 x_1 \cdot x_2
 $$
 
 * Chia: 
+
 $$
 x_1 / x_2
 $$
 
 * Hiệu: 
+
 $$
 x_1 - x_2
 $$
