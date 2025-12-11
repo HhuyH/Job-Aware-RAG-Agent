@@ -34,12 +34,11 @@ W = 0
 ---
 
 ### 3.2 Random Initialization
-```
+
 $$
 W \sim U(-a, a) \text{ hoặc } N(0, \sigma^2)
 $$
 
-```
 - Random nhỏ giúp symmetry break.  
 - Chọn a hoặc σ quá lớn → gradient explode.
 

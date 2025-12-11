@@ -69,12 +69,12 @@ $$
 Gradient đưa về lớp trước:
 
 $$
-\frac{\partial L}{\partial x}=\frac{\partial L}{\partial a} \cdotf'(z)\cdot w
+\frac{\partial L}{\partial x}=\frac{\partial L}{\partial a} \cdotf(z)\cdot w
 $$
 
 ---
 
-### ✔ Cập nhật trọng số (Gradient Descent)
+### Cập nhật trọng số (Gradient Descent)
 
 $$
 w := w - \eta \frac{\partial L}{\partial w}
