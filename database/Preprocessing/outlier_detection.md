@@ -23,9 +23,9 @@ Có bốn nhóm kỹ thuật phổ biến:
 Phát hiện điểm bất thường dựa trên khoảng cách so với trung bình tính theo đơn vị độ lệch chuẩn.
 
 ### Công thức
-\[
+$$
 z = \frac{x - \mu}{\sigma}
-\]
+$$
 
 ### Quy tắc
 - |z| > 3 → thường được coi là outlier
@@ -55,9 +55,9 @@ Dựa trên phân vị:
 ### Rule
 
 * Outlier nếu:
-  [
+  $$
   x < Q1 - 1.5 \cdot IQR \quad \text{hoặc} \quad x > Q3 + 1.5 \cdot IQR
-  ]
+  $$
 
 ### Khi dùng
 
