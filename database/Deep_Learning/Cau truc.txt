@@ -1,0 +1,50 @@
+Tạo file weight_initialization.md cho langchain đọc và tất cả công thức LaTeX đều dùng block.
+
+deep_learning/
+│
+├── fundamentals/
+│   ├── weight_initialization.md
+│   ├── regularization.md
+│   ├── normalization_vs_standardization.md
+│   ├── vanishing_exploding_gradient.md
+│
+├── architectures/
+│   ├── multilayer_perceptron.md
+│   ├── cnn_convolution_basics.md
+│   ├── cnn_architectures.md
+│   ├── rnn_basics.md
+│   ├── lstm.md
+│   ├── gru.md
+│   ├── attention_mechanism.md
+│   ├── transformer_architecture.md
+│   └── embeddings.md
+│
+├── training/
+│   ├── overfitting_underfitting.md
+│   ├── data_augmentation.md
+│   ├── batch_size_effects.md
+│   ├── loss_landscape.md
+│   ├── gradient_clipping.md
+│   ├── model_checkpointing.md
+│   ├── early_stopping.md
+│   ├── evaluation_metrics_classification.md
+│   ├── evaluation_metrics_regression.md
+│   └── training_pipeline_best_practices.md (tùy chọn)
+│
+├── computer_vision/
+│   ├── image_preprocessing.md
+│   ├── object_detection_basics.md
+│   ├── yolo_architecture.md
+│   ├── segmentation_basics.md
+│   ├── unet.md
+│   └── vision_transformer.md
+│
+└── nlp/
+    ├── text_preprocessing.md
+    ├── word_embeddings.md
+    ├── rnn_lstm_nlp.md
+    ├── seq2seq.md
+    ├── attention_in_nlp.md
+    ├── transformer_in_nlp.md
+    ├── language_modeling.md
+    └── llm_finetuning_basics.md
