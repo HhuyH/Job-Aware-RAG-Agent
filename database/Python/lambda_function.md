@@ -1,3 +1,9 @@
+---
+title: "Lambda Function"
+description: "Tổng quan về Lambda Function."
+tags: ["Python", "Lambda Function"]
+---
+
 # **Lambda Function**
 
 ## 1. **Khái niệm**

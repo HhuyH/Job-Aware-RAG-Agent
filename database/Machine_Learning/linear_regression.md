@@ -56,15 +56,7 @@ Dự đoán giá trị liên tục:
 Có thể dùng linear regression để phân loại nhị phân bằng cách:
 
 1. Fit mô hình như bài toán regression
-2. Lấy ngưỡng (threshold) để phân loại, ví dụ: ( 
-$$
-\hat{y} =
-\begin{cases}
-1 & \text{if } y > 0.5 \\
-0 & \text{otherwise}
-\end{cases}
-$$
- ), ngược lại 0.
+2. Lấy ngưỡng (threshold) để phân loại, ví dụ: (y>0.5⇒1), ngược lại 0.
 
 Tuy nhiên:
 

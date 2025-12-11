@@ -16,8 +16,14 @@ Feature Engineering là quá trình **tạo ra các đặc trưng mới** từ d
 Tạo các đặc trưng mới bằng cách lấy **lũy thừa** hoặc **tương tác** giữa các feature liên tục.
 
 Ví dụ:  
-- \( x \rightarrow [x, x^2, x^3] \)  
-- Tạo thêm feature từ tương tác: \( x_1 \cdot x_2 \)
+- $$
+x \rightarrow [x, x^2, x^3]
+$$
+
+- Tạo thêm feature từ tương tác: $$
+x_1 \cdot x_2
+$$
+
 
 ### Khi nào dùng?
 - Khi mô hình có tính **tuyến tính** (Linear Regression, Logistic Regression, SVM Linear) nhưng dữ liệu lại quan hệ **phi tuyến**.
@@ -46,9 +52,16 @@ Tạo feature bằng cách kết hợp **nhiều biến với nhau** để biể
 
 Ví dụ:
 
-* Nhân: ( x_1 \cdot x_2 )
-* Chia: ( x_1 / x_2 )
-* Hiệu: ( x_1 - x_2 )
+* Nhân: ( $$
+x_1 \cdot x_2
+$$
+ )
+* Chia: ( $$
+x_1 / x_2
+$$ )
+* Hiệu: ( $$
+x_1 - x_2
+$$ )
 
 ### Khi nào dùng?
 

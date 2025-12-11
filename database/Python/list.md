@@ -1,3 +1,9 @@
+---
+title: "List"
+description: "Tổng quan về List."
+tags: ["Python", "List"]
+---
+
 # **List**
 
 ## 1. **Khái niệm**
@@ -216,7 +222,7 @@ index(x)
 count(x)
 ```
 
-# Loop quá các phần tử
+## Loop quá các phần tử
 
 ```python
 fruitbasket = ["apple","banana","orange","grape","mango"]
@@ -239,7 +245,7 @@ while i < len(fruitbasket):
 [print(x) for x in fruitbasket]
 ```
 
-# Một số kỹ thuật tạo list
+## Một số kỹ thuật tạo list
 
 ```python
 fruitbasket = ["apple","banana","orange","grape","mango", "kiwi"]
@@ -291,7 +297,7 @@ newlist = [x if x != "banana" else "orange" for x in fruitbasket]
 ['apple', 'orange', 'orange', 'grape', 'mango', 'kiwi']
 ```
 
-# Xấp sếp phần tử trong list
+## Xấp sếp phần tử trong list
 
 ```python
 import sys

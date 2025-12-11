@@ -1,5 +1,7 @@
-Dưới đây là **file mẫu `unpacking.md`**, đã **tích hợp toàn bộ ví dụ bạn đưa**, đồng thời giữ đúng phong cách hệ thống ghi chú bạn đang xây dựng: rõ ràng – thực dụng – định hướng phỏng vấn.
-
+---
+title: "Tuple"
+description: "Tổng quan về Tuple."
+tags: ["Python", "Tuple"]
 ---
 
 # **Unpacking — Ghi chú nhanh & Câu hỏi phỏng vấn**

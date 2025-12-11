@@ -1,3 +1,9 @@
+---
+title: "Dictionary"
+description: "Tổng quan về Dictionary."
+tags: ["Python", "Dictionary"]
+---
+
 # **dictionary.md**
 
 ## 1. Tóm tắt khái niệm (Definition)

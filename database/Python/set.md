@@ -1,3 +1,9 @@
+---
+title: "Set"
+description: "Tổng quan về Set."
+tags: ["Python", "Set"]
+---
+
 # **Set — Ghi chú nhanh & Câu hỏi phỏng vấn**
 
 ## 1. **Khái niệm**
@@ -301,7 +307,7 @@ for value in data:
     seen.add(value)
 ```
 
-# Nối set
+## Nối set
 ```python
 # Có một số cách để nối hai hoặc nhiều tập hợp trong Python.
 a = {1, 2, 3}
@@ -341,7 +347,7 @@ print(a.symmetric_difference(b))
 
 ```
 
-# Union set
+## Union set
 ```python
 set1 = {"a", "b", "c"}
 set2 = {1, 2, 3}
@@ -371,7 +377,8 @@ print(z) #kết quả trả về vẫn là một set
 # Kết quả: {'a', 'b', 'c', 1, 2, 3}
 
 ```
-# Update set
+
+## Update set
 ```python
 # Phương thức update() chèn tất cả các phần tử từ một tập hợp vào một tập hợp khác.
 # Phương thức update() thay đổi tập hợp ban đầu và không trả về một tập hợp mới.
@@ -384,7 +391,7 @@ print(set1) # Kết quả: {1, 'a', 2, 3, 'c', 'b'}
 
 ```
 
-# Intersection set
+## Intersection set
 ```python
 set1 = {"apple", "banana", "cherry"}
 set2 = {"google", "microsoft", "apple"}
@@ -403,7 +410,7 @@ print(set1) # Kết quả: {'apple'}
 
 ```
 
-# Difference Set
+## Difference Set
 ```python
 #Phương thức difference() sẽ trả về một tập hợp mới chỉ chứa các mục từ tập hợp đầu tiên không có trong tập hợp kia.
 set1 = {"apple", "banana", "cherry"}
@@ -424,7 +431,8 @@ print(set3) # Kết quả: {'microsoft', 'cherry', 'banana', 'google'}
 set1.symmetric_difference_update(set2)
 print(set1) # Kết quả: {'cherry', 'microsoft', 'banana', 'google'}
 ```
-# Frozenset Set
+
+## Frozenset Set
 ```python
 # Giống như sets, frozenset chứa các phần tử duy nhất, không có thứ tự và không thể thay đổi.
 # Không giống như sets, các phần tử không thể được thêm hoặc bớt khỏi frozenset.

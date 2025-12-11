@@ -1,5 +1,7 @@
-Dưới đây là **file mẫu `tuple.md`**, đã tích hợp toàn bộ ví dụ bạn gửi và chuẩn hóa lại theo cấu trúc giống các file trước (rõ ràng – thực dụng – định hướng phỏng vấn).
-
+---
+title: "Tuple"
+description: "Tổng quan về Tuple."
+tags: ["Python", "Tuple"]
 ---
 
 # **Tuple — Ghi chú nhanh & Câu hỏi phỏng vấn**
