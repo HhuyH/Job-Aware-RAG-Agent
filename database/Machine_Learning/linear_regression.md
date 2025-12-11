@@ -3,7 +3,7 @@
 title: "Linear Regression"
 description: "Thuật toán Linear Regression trong Machine Learning (Regressor & Classifier)."
 tags: ["Machine Learning", "Linear Regression"]
------------------------------------------------
+---
 
 # Linear Regression
 
@@ -16,9 +16,9 @@ Mục tiêu: tìm đường thẳng (hoặc siêu phẳng) tối ưu mô tả d�
 ---
 
 ## 2. Công thức tổng quát
-
+$$
 ( y = w_1 x_1 + w_2 x_2 + ... + w_n x_n + b )
-
+$$
 Trong đó:
 
 * ( w ): trọng số
