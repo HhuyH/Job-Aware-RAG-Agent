@@ -24,23 +24,26 @@ Tập các items được mua hoặc xuất hiện cùng nhau.
 ### 1.2. Support
 
 Tần suất itemset xuất hiện trong toàn bộ dữ liệu.
-[
+
+$$
 Support(A) = \frac{\text{số giao dịch chứa A}}{\text{tổng giao dịch}}
-]
+$$
 
 ### 1.3. Confidence
 
 Xác suất xảy ra B khi A xảy ra.
-[
+
+$$
 Confidence(A \rightarrow B) = \frac{Support(A \cup B)}{Support(A)}
-]
+$$
 
 ### 1.4. Lift
 
 Đo lường độ mạnh của mối quan hệ.
-[
+
+$$
 Lift(A \rightarrow B) = \frac{Confidence(A \rightarrow B)}{Support(B)}
-]
+$$
 
 * Lift > 1: A và B có tương quan dương.
 * Lift = 1: Độc lập.

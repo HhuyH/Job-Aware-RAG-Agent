@@ -1,9 +1,8 @@
 ---
-
 title: "K-Nearest Neighbors (KNN)"
 description: "Tài liệu tổng hợp KNN cho cả Classification và Regression."
 tags: ["Machine Learning", "KNN", "Classifier", "Regressor"]
-------------------------------------------------------------
+---
 
 # K-Nearest Neighbors (KNN)
 

@@ -12,9 +12,15 @@ Logistic Regression là thuật toán **Classification**, dùng để dự đoá
 
 Cốt lõi của nó là mô hình hóa xác suất bằng hàm sigmoid:
 
+$$
 ( \sigma(z) = \frac{1}{1 + e^{-z}} )
+$$
 
-Trong đó (z = w^T x + b).
+Trong đó 
+
+$$
+(z = w^T x + b).
+$$
 
 ---
 
@@ -51,14 +57,19 @@ Một mẫu có thể mang nhiều nhãn.
 
 Sử dụng **Binary Cross Entropy**:
 
-[
+$$
 L = -[y \log(\hat{y}) + (1 - y) \log(1 - \hat{y})]
-]
+$$
 
 Trong đó:
 
 * (y): nhãn thật
-* (\hat{y}): xác suất dự đoán
+* 
+$$
+(\hat{y})
+$$
+
+xác suất dự đoán
 
 ---
 

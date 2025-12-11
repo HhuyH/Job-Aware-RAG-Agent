@@ -1,5 +1,4 @@
 ---
-
 title: "Random Forest"
 description: "Thuật toán Random Forest trong Machine Learning."
 tags: ["Machine Learning", "Random Forest"]

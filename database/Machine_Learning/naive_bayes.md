@@ -19,18 +19,21 @@ Naive Bayes là nhóm thuật toán phân loại (classification) dựa trên đ
   ]
 
 Dựa trên công thức Bayes:
-[
+
+$$
 P(y|x) = \frac{P(x|y)P(y)}{P(x)}
-]
+$$
+
 Vì (P(x)) là hằng số cho mọi lớp nên ta tối ưu:
-[
+
+$$
 \hat{y} = \arg\max_y P(x|y)P(y)
-]
+$$
 
 **"Naive"**: Giả định các đặc trưng độc lập điều kiện:
-[
+$$
 P(x|y) = \prod_{i=1}^{n} P(x_i|y)
-]
+$$
 
 ---
 
@@ -40,9 +43,10 @@ P(x|y) = \prod_{i=1}^{n} P(x_i|y)
 
 Dùng cho dữ liệu liên tục.
 Giả định mỗi feature theo phân phối chuẩn:
-[
+
+$$
 P(x_i|y) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x_i - \mu)^2}{2\sigma^2}}
-]
+$$
 
 ### 2.2. Multinomial Naive Bayes
 
