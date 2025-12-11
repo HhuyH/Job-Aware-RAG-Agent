@@ -56,9 +56,9 @@ Dựa trên phân vị:
 
 * Outlier nếu:
 
-  $$
-  x < Q1 - 1.5 \cdot IQR \quad \text{hoặc} \quad x > Q3 + 1.5 \cdot IQR
-  $$
+$$
+x < Q1 - 1.5 \cdot IQR \quad \text{hoặc} \quad x > Q3 + 1.5 \cdot IQR
+$$
 
 ### Khi dùng
 
