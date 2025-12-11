@@ -16,9 +16,12 @@ Mục tiêu: tìm đường thẳng (hoặc siêu phẳng) tối ưu mô tả d�
 ---
 
 ## 2. Công thức tổng quát
-$$
 ( y = w_1 x_1 + w_2 x_2 + ... + w_n x_n + b )
+
 $$
+\frac{\partial L}{\partial z_i} = \hat{y}_i - y_i
+$$
+
 Trong đó:
 
 * ( w ): trọng số
