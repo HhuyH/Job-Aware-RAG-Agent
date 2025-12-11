@@ -15,9 +15,9 @@ Scaling và normalization giúp đưa dữ liệu về cùng thang đo, cải th
 
 Chuẩn hóa dữ liệu về phân phối có **mean = 0** và **variance = 1**.
 
-\[
+$$
 x_{scaled} = \frac{x - \mu}{\sigma}
-\]
+$$
 
 ### Khi dùng
 - Linear Regression  
@@ -43,9 +43,9 @@ scaled = scaler.fit_transform(df[["age", "income"]])
 
 Đưa dữ liệu về khoảng **[0, 1]**.
 
-[
+$$
 x_{scaled} = \frac{x - x_{\min}}{x_{\max} - x_{\min}}
-]
+$$
 
 ### Khi dùng
 
@@ -71,9 +71,9 @@ scaled = scaler.fit_transform(df[["age", "income"]])
 
 Dùng median và IQR để giảm ảnh hưởng của outliers.
 
-[
+$$
 x_{scaled} = \frac{x - Q_2}{IQR}
-]
+$$
 
 ### Khi dùng
 
@@ -104,9 +104,9 @@ Chuẩn hóa **từng mẫu dữ liệu** về độ dài vector nhất định.
 
 Ví dụ L2 normalization:
 
-[
+$$
 x_{norm} = \frac{x}{|x|_2}
-]
+$$
 
 ### Khi dùng normalization
 
