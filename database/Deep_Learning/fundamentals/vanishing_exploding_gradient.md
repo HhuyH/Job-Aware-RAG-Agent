@@ -35,22 +35,17 @@ $$
 $$
 
 - Nếu 
-$$ 
 \| W^{[l]} \| < 1 
-$$ 
 và 
-$$ 
 f'(z^{[l]}) < 1 
-$$ → gradient giảm dần → **vanishing gradient**  
+→ gradient giảm dần → **vanishing gradient**  
+
 - Nếu 
-$$ 
 \| W^{[l]} \| > 1 
-$$ 
 hoặc 
-$$ 
 f'(z^{[l]}) > 1 
-$$
- → gradient tăng mạnh → **exploding gradient**
+→ gradient tăng mạnh → **exploding gradient**
+
 
 ---
 
