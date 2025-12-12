@@ -1,25 +1,36 @@
-Tiếp theo tạo file vision_transformer.md cho langchain đọc và tất cả công thức blox bang LaTeX $$ và nhớ có metadata.
+Tiếp theo là nlp tạo file rnn_lstm_nlp.md của phần deep learning cho langchain đọc và tất cả công thức blox bang LaTeX $$ và nhớ có metadata.
 
 deep_learning/
 │
-├── training/
-│   ├── overfitting_underfitting.md
-│   ├── data_augmentation.md
-│   ├── batch_size_effects.md
-│   ├── loss_landscape.md
-│   ├── gradient_clipping.md
-│   ├── model_checkpointing.md
-│   ├── early_stopping.md
-│   ├── evaluation_metrics_classification.md
-│   ├── evaluation_metrics_regression.md
-│   └── training_pipeline_best_practices.md (tùy chọn)
 │
 └── nlp/
-    ├── text_preprocessing.md
-    ├── word_embeddings.md
-    ├── rnn_lstm_nlp.md
-    ├── seq2seq.md
-    ├── attention_in_nlp.md
-    ├── transformer_in_nlp.md
     ├── language_modeling.md
     └── llm_finetuning_basics.md
+
+gồm metadata
+---
+title: Overfitting and Underfitting in Deep Learning
+description: Ghi chú về hiện tượng overfitting và underfitting trong deep learning, nguyên nhân, dấu hiệu nhận biết, và cách khắc phục.
+tags: [Deep Learning, Training, Overfitting, Underfitting, Model Generalization]
+---
+
+## 1. khái niệm
+
+## 2. Mục đích & khi nào dùng (Use Cases)
+
+## 3. Cách hoạt động bên trong (Internal Logic)
+
+## 4. Cấu trúc / Cú pháp (Syntax / Structure)
+
+## 5. Ví dụ code (Code Examples)
+
+## 6. Lỗi thường gặp (Common Pitfalls)
+
+## 7. So sánh với khái niệm liên quan (Comparison)
+
+## 8. Ứng dụng trong thực tế (Practical Insights)
+
+## 9. Câu hỏi phỏng vấn (Interview Questions)
+
+## 10. TL;DR (Short Summary)
+
