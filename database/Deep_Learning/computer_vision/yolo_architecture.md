@@ -1,9 +1,8 @@
 ---
-
 title: YOLO Architecture Basics
 description: Ghi chú về kiến trúc YOLO (You Only Look Once) trong object detection, cơ chế one-stage detection, bounding box prediction và loss function.
 tags: [YOLO, Object Detection, Computer Vision, Deep Learning, CNN]
--------------------------------------------------------------------
+---
 
 ## 1. Tóm tắt khái niệm (Definition)
 

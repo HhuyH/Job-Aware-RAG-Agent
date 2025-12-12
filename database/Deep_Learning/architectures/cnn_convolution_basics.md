@@ -1,9 +1,8 @@
 ---
-
 title: CNN Convolution Basics
 description: Tài liệu ghi chú cơ bản về Convolutional Neural Networks, các layer, convolution, pooling, activation và ứng dụng thực tế.
 tags: [CNN, Convolution, Deep Learning, Neural Network]
--------------------------------------------------------
+---
 
 ## 1. Tóm tắt khái niệm (Definition)
 

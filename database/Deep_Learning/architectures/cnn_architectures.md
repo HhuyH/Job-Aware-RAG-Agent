@@ -1,9 +1,8 @@
 ---
-
 title: CNN Architectures
 description: Ghi chú chi tiết về các kiến trúc CNN phổ biến như VGG, ResNet, Inception, bao gồm cấu trúc layer, skip connection, batch normalization và ứng dụng thực tế.
 tags: [CNN, ResNet, VGG, Inception, Deep Learning, Neural Network]
-------------------------------------------------------------------
+---
 
 ## 1. Tóm tắt khái niệm (Definition)
 
