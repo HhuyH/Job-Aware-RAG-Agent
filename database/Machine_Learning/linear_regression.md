@@ -1,5 +1,4 @@
 ---
-
 title: "Linear Regression"
 description: "Thuật toán Linear Regression trong Machine Learning (Regressor & Classifier)."
 tags: ["Machine Learning", "Linear Regression"]
