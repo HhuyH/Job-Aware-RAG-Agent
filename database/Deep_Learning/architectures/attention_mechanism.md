@@ -1,9 +1,8 @@
 ---
-
 title: Attention Mechanism Basics
 description: Ghi chú cơ bản về cơ chế Attention trong deep learning, bao gồm scaled dot-product attention, multi-head attention, cơ chế self-attention và ứng dụng.
 tags: [Attention, Transformer, Deep Learning, NLP, Sequence Modeling]
----------------------------------------------------------------------
+---
 
 ## 1. Tóm tắt khái niệm (Definition)
 
