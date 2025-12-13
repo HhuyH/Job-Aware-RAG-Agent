@@ -6,15 +6,46 @@ tags: [Deep Learning, Neural Networks, Machine Learning, AI]
 
 ## 1. Khái niệm
 
-**Deep Learning (DL)** là một nhánh của **Machine Learning**, sử dụng **mạng nơ-ron nhân tạo nhiều tầng (deep neural networks)** để học các biểu diễn phức tạp từ dữ liệu.
+**Deep Learning (DL)** là một nhánh của **Machine Learning**, tập trung vào việc học **biểu diễn dữ liệu theo nhiều mức trừu tượng** thông qua **mạng nơ-ron nhân tạo nhiều tầng (deep neural networks)**.
 
-Điểm khác biệt cốt lõi:
-- Machine Learning truyền thống: **feature engineering thủ công**
-- Deep Learning: **tự động học feature từ dữ liệu thô**
+Mỗi tầng trong mạng học một dạng biểu diễn:
 
-Deep Learning đặc biệt hiệu quả với:
-- Dữ liệu lớn
-- Dữ liệu phi cấu trúc: ảnh, âm thanh, văn bản, video
+* Tầng thấp: học **đặc trưng đơn giản** (ví dụ: cạnh trong ảnh, n-gram trong văn bản)
+* Tầng cao: học **khái niệm trừu tượng hơn** (vật thể, ngữ nghĩa, ngữ cảnh)
+
+### Điểm khác biệt cốt lõi so với Machine Learning truyền thống
+
+* **Machine Learning truyền thống**:
+
+  * Phụ thuộc mạnh vào **feature engineering thủ công**
+  * Hiệu quả bị giới hạn bởi chất lượng feature do con người thiết kế
+* **Deep Learning**:
+
+  * Thực hiện **representation learning end-to-end**
+  * Tự động trích xuất feature trực tiếp từ **dữ liệu thô** (raw data)
+  * Giảm phụ thuộc vào tri thức miền (domain knowledge) ở bước tiền xử lý
+
+### Vì sao “deep” lại quan trọng?
+
+* Nhiều tầng cho phép mô hình:
+
+  * Biểu diễn các **hàm phi tuyến rất phức tạp**
+  * Mô hình hóa **quan hệ phân cấp (hierarchical structure)** trong dữ liệu
+* Một mạng nông khó biểu diễn hiệu quả những cấu trúc này dù có nhiều neuron
+
+### Khi nào Deep Learning đặc biệt hiệu quả?
+
+Deep Learning phát huy sức mạnh khi:
+
+* Có **dữ liệu lớn** (large-scale datasets)
+* Dữ liệu **phi cấu trúc**, khó mô tả bằng feature thủ công:
+
+  * Ảnh
+  * Âm thanh
+  * Văn bản
+  * Video
+
+Ngược lại, với dữ liệu nhỏ hoặc có cấu trúc rõ ràng, DL **không phải lúc nào cũng là lựa chọn tối ưu**.
 
 ---
 
