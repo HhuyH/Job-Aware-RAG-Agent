@@ -1,3 +1,5 @@
+# trích xuất và làm sạch text từ file PDF resume
+
 from pdfminer.high_level import extract_text
 import re
 from pathlib import Path
@@ -31,7 +33,6 @@ def extract_resume_text():
     else:
         raw = extract_text_from_pdf(pdf_path)
         cleaned = clean_text(raw)
-        logger.info("Extracted %d characters", len(cleaned))
-
+        logger.debug("Extracted %d characters", len(cleaned))
+    
     return cleaned
-    # print(cleaned)

@@ -1,3 +1,5 @@
+# tách cấu trúc CV thành các section dựa trên heading và nội dung
+
 from typing import Dict, List
 import re
 
@@ -10,9 +12,11 @@ SECTION_HEADINGS = {
     "education": ["education", "academic"],
     "experience": ["experience", "employment"],
     "projects": ["project"],
-    "skills": ["skill", "technology", "tool"],
+    "skills": ["skill", "technology", ],
+    "tools": ["tool", "platform", "environment"],
     "certifications": ["certification", "certificate"],
 }
+
 
 META_HEADINGS = [
     "about",
@@ -22,7 +26,6 @@ META_HEADINGS = [
     "objective",
     "professional summary"
 ]
-
 
 # Heuristic xác định 1 dòng có phải heading hay không
 def is_heading(line: str) -> bool:
@@ -218,9 +221,20 @@ def structure_cv(text: str) -> Dict[str, str]:
         if blocks
     }
 
+    # hiện thị log các section đã tách
     logger.debug(f"Structured sections: {list(structured.keys())}")
     for sec, content in structured.items():
-        logger.info(f"\n--- {sec} ---\n{content[:200]}...\n")
+        logger.debug(f"\n--- {sec} ---\n{content[:]}...\n")
+        
+    from common.section_logger import log_sections
+
+    logger.debug("Structured sections: %s", list(structured.keys()))
+
+    log_sections(
+        structured,
+        only=["projects"] 
+    )
+
 
     return structured
 
