@@ -225,16 +225,6 @@ def structure_cv(text: str) -> Dict[str, str]:
     logger.debug(f"Structured sections: {list(structured.keys())}")
     for sec, content in structured.items():
         logger.debug(f"\n--- {sec} ---\n{content[:]}...\n")
-        
-    from common.section_logger import log_sections
-
-    logger.debug("Structured sections: %s", list(structured.keys()))
-
-    log_sections(
-        structured,
-        only=["projects"] 
-    )
-
 
     return structured
 

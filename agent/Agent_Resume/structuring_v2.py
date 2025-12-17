@@ -52,11 +52,24 @@ def classify_heading(line: str) -> str | None:
     return None
 
 # chia dòng dài thành các phần nhỏ hơn nếu cần
-def split_long_line(line: str, max_len: int = 80) -> List[str]:
-    """Split line tạm thời nếu quá dài hoặc có nhiều space (dấu hiệu 2 cột)"""
-    if len(line) > max_len and re.search(r'\s{2,}', line):
-        return [part.strip() for part in re.split(r'\s{2,}', line) if part.strip()]
-    return [line]
+def split_long_line_dynamic(line: str, min_gap: int = 15) -> List[str]:
+    words = [(m.start(), m.group()) for m in re.finditer(r'\S+', line)]
+    if not words:
+        return [line.strip()]
+    split_indices = []
+    for i in range(len(words) - 1):
+        gap = words[i + 1][0] - (words[i][0] + len(words[i][1]))
+        if gap >= min_gap:
+            split_indices.append(i + 1)
+    if not split_indices:
+        return [line.strip()]
+    columns = []
+    prev_idx = 0
+    for idx in split_indices:
+        columns.append(" ".join(w[1] for w in words[prev_idx:idx]).strip())
+        prev_idx = idx
+    columns.append(" ".join(w[1] for w in words[prev_idx:]).strip())
+    return [c for c in columns if c]
 
 # trích xuất section từ dòng heading đến heading tiếp theo
 def extract_section(lines: List[str], start_idx: int) -> Tuple[str, List[str], int]:
@@ -95,7 +108,7 @@ def structure_cv(text: str) -> Dict[str, str]:
     lines = [l.strip() for l in text.split("\n") if l.strip()]
     text_pool: List[str] = []
     for l in lines:
-        text_pool.extend(split_long_line(l))
+        text_pool.extend(split_long_line_dynamic(l))
 
     structured: Dict[str, List[str]] = {}
     unresolved: List[str] = []
@@ -157,9 +170,5 @@ def structure_cv(text: str) -> Dict[str, str]:
     for sec, content in result.items():
         logger.debug(f"\n--- {sec.upper()} ---\n{content[:500]}\n")
 
-    from common.section_logger import log_sections
-    log_sections(result, only=["UNRESOLVED"])
-
+    
     return result
-
-
