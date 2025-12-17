@@ -14,17 +14,17 @@ def log_sections(
     - only: list section names to log, None = all
     - preview: number of characters to show
     """
-    targets = only or sections.keys()
-
-    for sec in targets:
-        if sec not in sections:
-            logger.warning("Section [%s] not found", sec)
+    targets = {sec.lower(): sec for sec in sections.keys()}
+    for sec_name in (only or sections.keys()):
+        key = sec_name.lower()
+        if key not in targets:
+            logger.warning("Section [%s] not found", sec_name)
             continue
-
-        content = sections[sec]
+        content = sections[targets[key]]
         logger.info(
             "\n--- %s ---\n%s%s\n",
-            sec,
+            sec_name,
             content[:preview],
             "..." if len(content) > preview else ""
         )
+

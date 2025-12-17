@@ -23,6 +23,7 @@ def clean_text(text: str) -> str:
 
 def extract_resume_text():
     pdf_file = "LeNguyenHoanHuy_AI_Engineer_Fresher_CV.pdf"
+    # pdf_file = "Manhattan.pdf"
     pdf_path = RESUME_DIR / pdf_file
 
     # logger.info("BASE_DIR=%s", BASE_DIR)
