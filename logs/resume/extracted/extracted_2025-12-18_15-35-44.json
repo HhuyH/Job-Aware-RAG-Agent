@@ -1,0 +1,195 @@
+{
+  "skills": {
+    "languages": [
+      {
+        "name": "Python",
+        "level": "core"
+      },
+      {
+        "name": "C++",
+        "level": "core"
+      },
+      {
+        "name": "SQL",
+        "level": "core"
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "FastAPI",
+        "level": "core"
+      },
+      {
+        "name": "PyTorch",
+        "level": "core"
+      },
+      {
+        "name": "TensorFlow",
+        "level": "core"
+      },
+      {
+        "name": "Pandas",
+        "level": "core"
+      },
+      {
+        "name": "NumPy",
+        "level": "core"
+      },
+      {
+        "name": "Redis",
+        "level": "core"
+      },
+      {
+        "name": "OpenCV",
+        "level": "core"
+      },
+      {
+        "name": "Selenium",
+        "level": "core"
+      },
+      {
+        "name": "Firebase",
+        "level": "core"
+      }
+    ],
+    "ml": [
+      {
+        "name": "Machine Learning",
+        "level": "core"
+      },
+      {
+        "name": "Deep Learning",
+        "level": "core"
+      },
+      {
+        "name": "Conversational AI and multi-turn",
+        "level": "core"
+      },
+      {
+        "name": "Data preprocessing",
+        "level": "core"
+      },
+      {
+        "name": "model training",
+        "level": "core"
+      },
+      {
+        "name": "Experience integrating LLM-based",
+        "level": "core"
+      },
+      {
+        "name": "Familiar with basic Retrieval-",
+        "level": "exposure"
+      }
+    ],
+    "databases": [
+      {
+        "name": "MySQL",
+        "level": "core"
+      },
+      {
+        "name": "SQL Server",
+        "level": "core"
+      },
+      {
+        "name": "Database",
+        "level": "core"
+      },
+      {
+        "name": "Design (ERD",
+        "level": "core"
+      },
+      {
+        "name": "DFD",
+        "level": "core"
+      },
+      {
+        "name": "Use Case).",
+        "level": "core"
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "Android Studio"
+    },
+    {
+      "name": "Github"
+    },
+    {
+      "name": "Jupyter Notebook"
+    },
+    {
+      "name": "VS Code"
+    }
+  ],
+  "certifications": [
+    {
+      "name": "TOEIC",
+      "score": "745"
+    }
+  ],
+  "identity": {
+    "name": "LÊ NGUYỄN HOÀN HUY",
+    "role": "AI Engineer Intern / Fresher"
+  },
+  "projects": [
+    {
+      "title": "Project HealthCare – Chatbot",
+      "role": "AI Developer",
+      "description": "Duration: May 19, 2025 – August 20, 2025\nDescription:\nAn intelligent healthcare chatbot that analyzes users’ initial symptoms to suggest whether they should visit a doctor. The system also supports consultation, appointment booking, health product recommendations, and natural language data queries. Additionally, I designed multi-turn dialogue flow with context tracking, similar to NPC-style conversation logic used in game bots.\nKey Features:\n• Symptom analysis: Asks follow-up questions and provides basic health advice.\n• Health consultation: Suggests improvement methods based on user conditions.\n• Appointment booking: Creates and confirms medical appointments through chat.\n• Product recommendation: Suggests suitable health products and devices; generates reports for doctors.\n• Admin tasks: Supports natural language queries on data such as products and orders.",
+      "technologies": [
+        "Python",
+        "FastAPI",
+        "GPT API",
+        "MySQL",
+        "Redis."
+      ],
+      "signals": {
+        "llm": true,
+        "backend": true,
+        "ml_training": false,
+        "ml_inference": false,
+        "data": false,
+        "production": false
+      }
+    },
+    {
+      "title": "Project LLM-based Knowledge Assistant",
+      "role": "Personal Project",
+      "description": "• Built a prototype Retrieval-Augmented Generation (RAG) system to answer domain-specific questions from custom documents.\n• Implemented document chunking, embeddings, vector search, and LLM response generation.\n• Explored LangChain to orchestrate retrieval and prompt pipelines.",
+      "technologies": [
+        "Python",
+        "LangChain",
+        "OpenAI API"
+      ],
+      "signals": {
+        "llm": true,
+        "backend": true,
+        "ml_training": false,
+        "ml_inference": false,
+        "data": false,
+        "production": false
+      }
+    },
+    {
+      "title": "Project Alphabet – Sign Language Detection",
+      "role": "Personal Project",
+      "description": "A system that recognizes American Sign Language (ASL) hand gestures (33 signs) using a Convolutional Neural Network (CNN) to support communication for the hearing-impaired community. Implemented real-time inference pipeline for continuous input streams.\nImplementation Process:\n• Migrated from Random Forest to CNN to improve performance.\n• Processed image data: removed backgrounds, cropped hand regions, applied data augmentation (rotation, background replacement).\n• Trained CNN model using TensorFlow/Keras, achieving ~94.6% accuracy across 33 gesture classes.\n• Configured a real-time demo with webcam integration (via Jupyter Notebook).\n\nKey Result: Achieved approximately 94.62% accuracy across 33 ASL signs.\nFuture Vision:\n• Extend the system to recognize continuous sign language sequences and improve real-time usability.",
+      "technologies": [
+        "Python",
+        "TensorFlow/Keras",
+        "OpenCV",
+        "Jupyter Notebook"
+      ],
+      "signals": {
+        "llm": false,
+        "backend": false,
+        "ml_training": false,
+        "ml_inference": true,
+        "data": true,
+        "production": false
+      }
+    }
+  ]
+}
