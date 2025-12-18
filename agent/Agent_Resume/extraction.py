@@ -1,12 +1,17 @@
+# File này trích xuất dữ liệu có cấu trúc từ từng section CV (identity, skills, tools, projects, work experience, certifications…) 
+# bằng regex + heuristic, chuyển text đã structure thành object/JSON chuẩn để downstream dùng trực tiếp.
+
 from typing import List, Dict, Any, Optional
 from dataclasses import dataclass, asdict
 import re
-from common.logger import get_logger
 from pathlib import Path
+import json
+from common.logger import get_logger
 from common.json_logger import dump_json
 
 logger = get_logger("agent.resume.extraction")
 
+# Data Classes
 @dataclass
 class Project:
     title: str
@@ -35,8 +40,48 @@ class SkillSet:
 @dataclass
 class Tool:
     name: str
+    
+@dataclass
+class Identity:
+    name: str
+    role: str
+from typing import List, Optional
+from dataclasses import dataclass
+import re
 
-# Trích xuất kỹ năng từ text dựa trên tập từ khóa đã định nghĩa
+@dataclass
+class WorkExperience:
+    company: str
+    role: str
+    start_date: Optional[str]
+    end_date: Optional[str]
+    description: str
+
+ROLE_KEYWORDS = ["engineer", "intern", "junior", "fresher", "developer", "ai", "ml"]
+
+def extract_identity(identity_text: str) -> Identity:
+    lines = [line.strip() for line in identity_text.splitlines() if line.strip()]
+    if not lines:
+        return Identity(name="", role="")
+
+    name = ""
+    role = ""
+
+    if len(lines) == 1:
+        name = lines[0]
+    elif len(lines) >= 2:
+        for i, line in enumerate(lines):
+            if any(k.lower() in line.lower() for k in ROLE_KEYWORDS):
+                role = line
+                name = lines[0] if i != 0 else lines[1]
+                break
+        else:
+            # fallback mặc định
+            name, role = lines[0], lines[1]
+
+    return Identity(name=name, role=role)
+
+# Extractor Functions
 def extract_skills(text: str) -> SkillSet:
     SECTION_MAP = {
         "programming languages": "languages",
@@ -45,17 +90,17 @@ def extract_skills(text: str) -> SkillSet:
         "ai / machine learning": "ml",
         "database": "databases",
     }
-    
+
     LEVEL_HINTS = {
         "core": ["core", "strong", "primary"],
         "exposure": ["optional", "exposure", "familiar", "basic"]
     }
 
     skills = {
-            "languages": [],
-            "frameworks": [],
-            "ml": [],
-            "databases": [],
+        "languages": [],
+        "frameworks": [],
+        "ml": [],
+        "databases": [],
     }
 
     current_category = None
@@ -88,6 +133,7 @@ def extract_skills(text: str) -> SkillSet:
 
     return SkillSet(**skills)
 
+# Extract Tools
 def extract_tools(text: str) -> List[Dict[str, str]]:
     TOOLS = [
         "github",
@@ -99,29 +145,25 @@ def extract_tools(text: str) -> List[Dict[str, str]]:
         "sql server management studio",
         "ssms",
     ]
-    
+
     found = set()
     lower_text = text.lower()
 
     for tool in TOOLS:
-        # match whole phrase, tránh dính chữ
         pattern = r"\b" + re.escape(tool) + r"\b"
         if re.search(pattern, lower_text):
-            # normalize output name
             name = tool
-
             if tool in ("vscode", "vs code"):
                 name = "VS Code"
             elif tool == "ssms":
                 name = "SQL Server Management Studio"
             else:
                 name = tool.title()
-
             found.add(name)
 
     return [{"name": t} for t in sorted(found)]
 
-# Trích xuất chứng chỉ từ text
+# Extract Certifications
 def extract_certifications(text: str) -> List[Certification]:
     CERT_PATTERN = re.compile(
         r"""
@@ -133,7 +175,6 @@ def extract_certifications(text: str) -> List[Certification]:
     )
 
     certs = []
-
     for line in text.splitlines():
         m = CERT_PATTERN.search(line)
         if m:
@@ -145,24 +186,29 @@ def extract_certifications(text: str) -> List[Certification]:
             )
     return certs
 
-# Dự đoán các tín hiệu kỹ thuật từ mô tả project
-def infer_project_signals(text: str) -> Dict[str, bool]:
-    lower = text.lower()
+# Trích xuất tín hiệu project và những gì đuoc
+PROJECT_SIGNAL_KEYWORDS = {
+    "llm": ["llm", "gpt", "rag", "langchain"],
+    "backend": ["api", "fastapi", "flask", "backend"],
+    "ml_training": ["training", "fine-tuning", "loss", "epoch"],
+    "ml_inference": ["inference", "predict", "serving"],
+    "data": ["dataset", "etl", "pipeline"],
+    "production": ["deploy", "docker", "kubernetes", "production"]
+}
 
-    return {
-        "llm": any(k in lower for k in ["llm", "gpt", "rag", "langchain"]),
-        "backend": any(k in lower for k in ["api", "fastapi", "flask", "backend"]),
-        "ml_training": any(k in lower for k in ["training", "fine-tuning", "loss", "epoch"]),
-        "ml_inference": any(k in lower for k in ["inference", "predict", "serving"]),
-        "data": any(k in lower for k in ["dataset", "etl", "pipeline"]),
-        "production": any(k in lower for k in ["deploy", "docker", "kubernetes", "production"])
-    }
+def infer_project_signals(text: str) -> dict:
+    text = text.lower()
+    signals = {}
+    for signal, keywords in PROJECT_SIGNAL_KEYWORDS.items():
+        signals[signal] = any(re.search(rf"\b{k}\b", text) for k in keywords)
+    return signals
 
 PROJECT_TITLE_PATTERN = re.compile(
     r"^(?P<title>.+?)\s+—\s+(?P<role>.+)$",
     re.MULTILINE
 )
 
+# Tách project blocks
 def split_projects(text: str) -> List[str]:
     matches = list(PROJECT_TITLE_PATTERN.finditer(text))
     blocks = []
@@ -174,7 +220,7 @@ def split_projects(text: str) -> List[str]:
 
     return blocks
 
-# Trích xuất thông tin project từ block text
+# trích xuất project từ block
 def extract_project(block: str) -> Optional[Project]:
     lines = block.splitlines()
     if not lines:
@@ -186,30 +232,14 @@ def extract_project(block: str) -> Optional[Project]:
 
     title = m.group("title").strip()
     role = m.group("role").strip()
-
-    # Remove title line
     body = "\n".join(lines[1:])
 
-    # Technologies
-    techs = re.search(
-        r"Technologies?:\s*(.+)",
-        body,
-        flags=re.IGNORECASE
-    )
+    techs = re.search(r"Technologies?:\s*(.+)", body, flags=re.IGNORECASE)
     technologies = []
     if techs:
-        technologies = [
-            t.strip()
-            for t in re.split(r",|\|", techs.group(1))
-        ]
+        technologies = [t.strip() for t in re.split(r",|\|", techs.group(1))]
 
-    # Description = everything except Technologies / Project Link
-    description = re.sub(
-        r"(Technologies?:.*|Project Link:.*)",
-        "",
-        body,
-        flags=re.IGNORECASE
-    ).strip()
+    description = re.sub(r"(Technologies?:.*|Project Link:.*)", "", body, flags=re.IGNORECASE).strip()
 
     return Project(
         title=title,
@@ -219,51 +249,88 @@ def extract_project(block: str) -> Optional[Project]:
         signals=infer_project_signals(block)
     )
 
-# Trích xuất thông tin từ các section đã cấu trúc và chuyển thành định dạng có cấu trúc json
+# Regex patterns để detect title + duration
+WORK_TITLE_PATTERN = re.compile(
+    r"""
+    ^(?P<company>.+?)\s*[-–—@]\s*(?P<role>.+)$   # Company — Role hoặc Role @ Company
+    """,
+    re.MULTILINE | re.VERBOSE
+)
+
+DURATION_PATTERN = re.compile(
+    r"(?P<start>[A-Za-z]{3,9} \d{4})\s*[-–to]+\s*(?P<end>[A-Za-z]{3,9} \d{4}|Present)",
+    re.IGNORECASE
+)
+
+def extract_work_experience(text: str) -> List[WorkExperience]:
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    experiences = []
+    
+    matches = list(WORK_TITLE_PATTERN.finditer(text))
+    for i, m in enumerate(matches):
+        start_idx = m.start()
+        end_idx = matches[i + 1].start() if i + 1 < len(matches) else len(text)
+        block = text[start_idx:end_idx].strip()
+        
+        company = m.group("company").strip()
+        role = m.group("role").strip()
+        start_date = None
+        end_date = None
+        
+        # Tìm duration trong block
+        dur_match = DURATION_PATTERN.search(block)
+        if dur_match:
+            start_date = dur_match.group("start")
+            end_date = dur_match.group("end")
+        
+        # Lấy description (bỏ title + duration nếu có)
+        description_lines = []
+        for line in block.splitlines()[1:]:
+            if not DURATION_PATTERN.search(line):
+                description_lines.append(line)
+        description = "\n".join(description_lines).strip()
+        
+        experiences.append(
+            WorkExperience(
+                company=company,
+                role=role,
+                start_date=start_date,
+                end_date=end_date,
+                description=description
+            )
+        )
+    
+    return experiences
+
+# Section Mapping
+SECTION_EXTRACTORS = {
+    "identity": lambda text: asdict(extract_identity(text)),
+    "skills": lambda text: asdict(extract_skills(text)),
+    "tools": extract_tools,
+    "certifications": lambda text: [asdict(c) for c in extract_certifications(text)],
+    "projects": lambda text: [asdict(p) for p in map(extract_project, split_projects(text)) if p],
+    "work experience": lambda text: [asdict(w) for w in extract_work_experience(text)],
+    # có thể thêm section mới dễ dàng
+}
+
+# Main Extraction Function
 def extract_from_sections(sections: Dict[str, str]) -> Dict[str, Any]:
     logger.info("Start extraction")
-
     extracted: Dict[str, Any] = {}
 
-    # Skills
-    if "skills" in sections:
-        extracted["skills"] = asdict(
-            extract_skills(sections["skills"])
-        )
-        
-    # Tools
-    if "tools" in sections:
-        extracted["tools"] = extract_tools(sections["tools"])
+    for section, text in sections.items():
+        extractor = SECTION_EXTRACTORS.get(section.lower())
+        if extractor:
+            try:
+                extracted[section.lower()] = extractor(text)
+            except Exception as e:
+                logger.error("Failed to extract section %s: %s", section, e)
+                extracted[section.lower()] = None
 
-    # Certifications
-    if "certifications" in sections:
-        extracted["certifications"] = [
-            asdict(c)
-            for c in extract_certifications(sections["certifications"])
-        ]
-
-    # Projects
-    projects = []
-    if "projects" in sections:
-        for block in split_projects(sections["projects"]):
-            p = extract_project(block)
-            if p:
-                projects.append(asdict(p))
-
-
-    extracted["projects"] = projects
-    
+    # Lưu file
     LOG_DIR = Path(__file__).resolve().parents[2] / "logs" / "resume" / "extracted"
-
-    file_path = dump_json(
-        extracted,
-        base_dir=LOG_DIR,
-        prefix="extracted"
-    )
-
+    file_path = dump_json(extracted, base_dir=LOG_DIR, prefix="extracted")
     logger.info("Extraction result saved to %s", file_path)
-    
     logger.info("Extraction completed")
-    
-    return extracted
 
+    return extracted

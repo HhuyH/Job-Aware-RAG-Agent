@@ -1,3 +1,6 @@
+# V2 chia CV thành section rõ hơn, xử lý dòng dài và chứng chỉ riêng, dùng chiến lược consume & remove, 
+# giảm trùng lặp, trong khi V1 chỉ tách block dựa trên heading và keyword mà chưa tối ưu dòng dài hay merge duplicate.
+
 from typing import Dict, List, Tuple
 import re
 from common.logger import get_logger

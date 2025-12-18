@@ -1,5 +1,5 @@
-# tách cấu trúc CV thành các section dựa trên heading và nội dung
-
+# Chia text CV thành các section dựa trên heading và nội dung, tách nhỏ các block (project, experience, certifications), dự đoán section dựa trên keyword, 
+# và loại bỏ hoặc giữ lại các block chứng chỉ hợp lệ. Nó chuẩn hóa CV để downstream có thể dễ dàng trích xuất thông tin.
 from typing import Dict, List
 import re
 

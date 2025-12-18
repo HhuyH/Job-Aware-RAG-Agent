@@ -1,4 +1,10 @@
-# trích xuất và làm sạch text từ file PDF resume
+# Trích xuất văn bản từ PDF: Dùng pdfminer để đọc toàn bộ nội dung text từ file PDF.
+# Làm sạch văn bản: Loại bỏ khoảng trắng dư thừa, chuẩn hóa các tab, và gom các dòng trống liên tiếp để text dễ xử lý hơn sau này.
+
+# Các hàm chính:
+# - extract_text_from_pdf(pdf_path): Nhận đường dẫn PDF, trả về toàn bộ text thô.
+# - clean_text(text): Chuẩn hóa text, loại bỏ khoảng trắng và các dòng trống dư thừa.
+# - extract_resume_text(pdf_file): Tích hợp trích xuất + làm sạch, nhận tên file PDF trong thư mục resumes, trả về text đã sạch. Đồng thời ghi log các bước quan trọng (nếu file không tồn tại, ghi lỗi).
 
 from pdfminer.high_level import extract_text
 import re
@@ -21,9 +27,7 @@ def clean_text(text: str) -> str:
     text = re.sub(r"\n{3,}", "\n\n", text)
     return text.strip()
 
-def extract_resume_text():
-    pdf_file = "LeNguyenHoanHuy_AI_Engineer_Fresher_CV.pdf"
-    # pdf_file = "Manhattan.pdf"
+def extract_resume_text(pdf_file: str = None) -> str:
     pdf_path = RESUME_DIR / pdf_file
 
     # logger.info("BASE_DIR=%s", BASE_DIR)
