@@ -2,15 +2,8 @@ import re
 from typing import Optional, Dict, List
 
 
-# =========================
-# PUBLIC API
-# =========================
-
+# Chuẩn hóa vị trí từ raw JD
 def normalize_location(text: Optional[str]) -> Optional[List[Dict]]:
-    """
-    Normalize job location(s) from raw text.
-    Return list of location dicts.
-    """
     if not text:
         return None
 
@@ -22,10 +15,10 @@ def normalize_location(text: Optional[str]) -> Optional[List[Dict]]:
 
     raw_lc = raw.lower()
     
-    print("Raw location" + raw)
+    # print("Raw location" + raw)
 
     # Remote
-    if _is_remote(raw_lc):
+    if is_remote(raw_lc):
         return [{
             "raw": raw,
             "type": "remote",
@@ -40,7 +33,7 @@ def normalize_location(text: Optional[str]) -> Optional[List[Dict]]:
 
     locations: List[Dict] = []
 
-    # Split multi-locations
+    # Cát nhiều vì trí
     parts = re.split(r"[\/|]+", raw)
     for part in parts:
         loc = _normalize_single_location(part.strip())
@@ -50,10 +43,7 @@ def normalize_location(text: Optional[str]) -> Optional[List[Dict]]:
     return locations or None
 
 
-# =========================
-# SINGLE LOCATION
-# =========================
-
+# 1 vị trí
 def _normalize_single_location(raw: str) -> Optional[Dict]:
     raw_lc = raw.lower()
     
@@ -69,36 +59,36 @@ def _normalize_single_location(raw: str) -> Optional[Dict]:
         "confidence": 0.0
     }
 
-    # 1️⃣ Extract city
-    city = _extract_city(raw_lc)
+    # trích thành phố
+    city = extract_city(raw_lc)
     if city:
         location["city"] = city
         location["country"] = "Vietnam"
         location["confidence"] += 0.5
         location["granularity"] = "city"
 
-    # 2️⃣ Remove city prefix nếu có
+    # Remove city prefix nếu có
     if ":" in raw:
         raw_for_address = raw.split(":", 1)[1].strip()
     else:
         raw_for_address = raw
 
-    # 3️⃣ Extract district
-    district = _extract_district(raw_for_address)
+    # Trích quận huyện
+    district = extract_district(raw_for_address)
     if district:
         location["district"] = district
         location["confidence"] += 0.2
         location["granularity"] = "district"
 
-    # 4️⃣ Extract ward
-    ward = _extract_ward(raw_for_address)
+    # Trích phường xã
+    ward = extract_ward(raw_for_address)
     if ward:
         location["ward"] = ward
         location["confidence"] += 0.15
         location["granularity"] = "address"
 
-    # 5️⃣ Extract street
-    street = _extract_street(raw_for_address)
+    # Trích đường
+    street = extract_street(raw_for_address)
     if street:
         location["street"] = street
         location["confidence"] += 0.15
@@ -111,19 +101,8 @@ def _normalize_single_location(raw: str) -> Optional[Dict]:
     location["confidence"] = round(min(location["confidence"], 1.0), 2)
     return location
 
-
-# =========================
-# HELPERS
-# =========================
-
-def clean_location_raw(raw: str) -> str:
-    # Loại bỏ các thông báo kiểu "(đã được cập nhật theo ...)"
-    raw = re.sub(r"\(.*?cập nhật.*?\)", "", raw, flags=re.IGNORECASE)
-    # Loại bỏ dấu "-"
-    raw = raw.replace("-", " ")
-    return raw.strip()
-
-def _is_remote(text: str) -> bool:
+# Kiếm tra xem có phải làm từ xa hay không
+def is_remote(text: str) -> bool:
     return any(k in text for k in [
         "remote",
         "work from home",
@@ -131,49 +110,22 @@ def _is_remote(text: str) -> bool:
         "anywhere"
     ])
 
-
-# CITY
-CITY_PATTERNS = {
-    "Ho Chi Minh": r"hồ\s*chí\s*minh|tp\.?\s*hcm|hcm\b|ho\s*chi\s*minh",
-    "Ha Noi": r"hà\s*nội|ha\s*noi",
-    "Da Nang": r"đà\s*nẵng|da\s*nang",
-    "Binh Duong": r"bình\s*dương|binh\s*duong",
-    "Dong Nai": r"đồng\s*nai|dong\s*nai",
-}
-
-def _extract_city(text: str) -> Optional[str]:
+# Trích thành phố
+def extract_city(text: str) -> Optional[str]:
     for city, pattern in CITY_PATTERNS.items():
         if re.search(pattern, text):
             return city
     return None
 
-
-# DISTRICT
-DISTRICT_PATTERN = re.compile(
-    r"(quận|q\.?|huyện)\s*(?P<district>[A-Za-zÀ-ỹ0-9\s]+)",
-    re.IGNORECASE
-)
-
-def _extract_district(text: str) -> Optional[str]:
+# Trích Quân huyện
+def extract_district(text: str) -> Optional[str]:
     m = DISTRICT_PATTERN.search(text)
     if m:
         return f"District {m.group(2)}"
     return None
 
-
-# WARD
-WARD_PATTERN = re.compile(
-    r"(phường|p\.?|ward)\s*([A-Za-zÀ-ỹ0-9\s,.-]{1,50})", re.IGNORECASE
-)
-
-INVALID_WARD_KEYWORDS = [
-    "hành chính",
-    "danh mục",
-    "cập nhật",
-    "theo",
-]
-
-def _extract_ward(text: str) -> Optional[str]:
+# Trích Phường xã
+def extract_ward(text: str) -> Optional[str]:
     m = WARD_PATTERN.search(text)
     if not m:
         return None
@@ -186,19 +138,58 @@ def _extract_ward(text: str) -> Optional[str]:
 
     return ward
 
+# Trích đường
+def extract_street(text: str) -> Optional[str]:
+    m = STREET_PATTERN.search(text)
+    if m:
+        return clean_street(m.group())
+    return None
 
-# STREET
+# Hàm làm sạch tên đường
+def clean_street(street: str) -> str:
+    # Gộp nhiều khoảng trắng liên tiếp thành một khoảng trắng
+    street = re.sub(r"\s{2,}", " ", street)
+    # Loại bỏ các ký tự phân cách dư ở đầu/cuối
+    return street.strip(",.- ")
+
+# Clean 1 số thứ không cần thiết
+def clean_location_raw(raw: str) -> str:
+    # Loại bỏ các thông báo kiểu "(đã được cập nhật theo ...) của TopCV"
+    raw = re.sub(r"\(.*?cập nhật.*?\)", "", raw, flags=re.IGNORECASE)
+    # Loại bỏ dấu "-"
+    raw = raw.replace("-", " ")
+    return raw.strip()
+
+# ------- PATTERNS -------
+# Thành phố
+CITY_PATTERNS = {
+    "Ho Chi Minh": r"hồ\s*chí\s*minh|tp\.?\s*hcm|hcm\b|ho\s*chi\s*minh",
+    "Ha Noi": r"hà\s*nội|ha\s*noi",
+    "Da Nang": r"đà\s*nẵng|da\s*nang",
+    "Binh Duong": r"bình\s*dương|binh\s*duong",
+    "Dong Nai": r"đồng\s*nai|dong\s*nai",
+}
+
+# Quận huyện
+DISTRICT_PATTERN = re.compile(
+    r"(quận|q\.?|huyện)\s*(?P<district>[A-Za-zÀ-ỹ0-9\s]+)",
+    re.IGNORECASE
+)
+
+# Phường xã
+WARD_PATTERN = re.compile(
+    r"(phường|p\.?|ward)\s*([A-Za-zÀ-ỹ0-9\s,.-]{1,50})", re.IGNORECASE
+)
+
+# Từ khóa ko cần thiết
+INVALID_WARD_KEYWORDS = [
+    "hành chính",
+    "danh mục",
+    "cập nhật",
+    "theo",
+]
+
+# Đường
 STREET_PATTERN = re.compile(
     r"((?:tầng\s*\d+,\s*)?(?:số\s*\d+,\s*)?(?:đường|street)\s+[A-Za-zÀ-ỹ0-9\s,.-]+)", re.IGNORECASE
 )
-
-def _extract_street(text: str) -> Optional[str]:
-    m = STREET_PATTERN.search(text)
-    if m:
-        return _clean_street(m.group())
-    return None
-
-
-def _clean_street(street: str) -> str:
-    street = re.sub(r"\s{2,}", " ", street)
-    return street.strip(",.- ")

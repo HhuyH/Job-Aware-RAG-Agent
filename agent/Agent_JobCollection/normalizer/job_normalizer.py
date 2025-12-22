@@ -13,7 +13,7 @@ from common.logger import get_logger
 
 logger = get_logger("agent.resume.structuring")
 
-# OUTPUT SCHEMA
+# Các giá trị đầu ra
 @dataclass
 class NormalizedJob:
     # Core identity
@@ -35,20 +35,6 @@ class NormalizedJob:
     raw_ref: Optional[str] = None  # job id / url
     debug: dict = field(default_factory=dict)
 
-
-LOCATION_ANCHORS = [
-    "địa điểm làm việc",
-    "work location",
-    "location",
-]
-
-STOP_ANCHORS = [
-    "thời gian",
-    "cách thức",
-    "quyền lợi",
-    "yêu cầu",
-]
-
 def extract_location_block(jd_text: str) -> Optional[str]:
     lines = [l.strip() for l in jd_text.splitlines() if l.strip()]
     buf = []
@@ -68,11 +54,8 @@ def extract_location_block(jd_text: str) -> Optional[str]:
 
     return "\n".join(buf) if buf else None
 
-# NORMALIZER
+# Chuẩn hóa Raw job
 class JobNormalizer:
-    """
-    Normalize RawJob → NormalizedJob
-    """
 
     def normalize(self, raw_job: RawJob) -> NormalizedJob:
         # 1. Title
@@ -117,3 +100,16 @@ class JobNormalizer:
             }
         )
 
+# ------- PATTERNS -------
+LOCATION_ANCHORS = [
+    "địa điểm làm việc",
+    "work location",
+    "location",
+]
+
+STOP_ANCHORS = [
+    "thời gian",
+    "cách thức",
+    "quyền lợi",
+    "yêu cầu",
+]

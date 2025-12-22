@@ -2,15 +2,15 @@ import re
 from typing import List, Dict, Optional
 
 
-# SKILL DICTIONARY
+# Danh sách skills
 SKILL_PATTERNS: Dict[str, List[str]] = {
-    # --- Core programming ---
+    #  Core programming 
     "python": [r"\bpython\b"],
     "java": [r"\bjava\b"],
     "c++": [r"\bc\+\+\b"],
     "sql": [r"\bsql\b"],
     
-    # --- ML / AI ---
+    #  ML / AI 
     "machine learning": [
         r"machine[\s\-]?learning",
         r"\bml\b"
@@ -24,7 +24,7 @@ SKILL_PATTERNS: Dict[str, List[str]] = {
         r"\bai\b"
     ],
 
-    # --- NLP / LLM ---
+    #  NLP / LLM 
     "nlp": [
         r"\bnlp\b",
         r"natural[\s\-]?language"
@@ -38,31 +38,30 @@ SKILL_PATTERNS: Dict[str, List[str]] = {
         r"attention model"
     ],
 
-    # --- Frameworks ---
+    #  Frameworks 
     "pytorch": [r"\bpytorch\b"],
     "tensorflow": [r"\btensorflow\b"],
     "keras": [r"\bkeras\b"],
     "scikit-learn": [r"scikit[\s\-]?learn", r"\bsklearn\b"],
 
-    # --- Data ---
+    #  Data 
     "pandas": [r"\bpandas\b"],
     "numpy": [r"\bnumpy\b"],
     "spark": [r"\bspark\b"],
 
-    # --- MLOps ---
+    #  MLOps 
     "docker": [r"\bdocker\b"],
     "kubernetes": [r"\bkubernetes\b|\bk8s\b"],
     "mlops": [r"\bmlops\b"],
     "airflow": [r"\bairflow\b"],
 
-    # --- Cloud ---
+    #  Cloud 
     "aws": [r"\baws\b|amazon web services"],
     "gcp": [r"\bgcp\b|google cloud"],
     "azure": [r"\bazure\b"]
 }
 
-
-# STOPWORDS / NOISE
+# Những từ ko cần thiết
 NOISE_KEYWORDS = {
     "communication",
     "teamwork",
@@ -73,16 +72,11 @@ NOISE_KEYWORDS = {
     "presentation"
 }
 
-
-# CORE FUNCTION
+# Trích xuất kỹ năng từ JD
 def extract_skills(
     text: str,
     fallback_keywords: Optional[List[str]] = None
 ) -> List[str]:
-    """
-    Trích xuất skill kỹ thuật từ JD đã clean.
-    fallback_keywords: keyword lấy từ crawler (nếu JD ngắn)
-    """
 
     if not text:
         text = ""
@@ -90,21 +84,21 @@ def extract_skills(
     text = text.lower()
     skills_found = set()
 
-    # --- Extract from JD text ---
+    # trích từ raw JD
     for skill, patterns in SKILL_PATTERNS.items():
         for pattern in patterns:
             if re.search(pattern, text):
                 skills_found.add(skill)
                 break
 
-    # --- Fallback keywords ---
+    # Trả về keywork có trong danh sách
     if fallback_keywords:
         for kw in fallback_keywords:
             kw_norm = kw.lower().strip()
             if kw_norm in SKILL_PATTERNS:
                 skills_found.add(kw_norm)
 
-    # --- Remove noise ---
+    # Loại bỏ những từ ko cần thiết
     skills_cleaned = [
         s for s in skills_found
         if s not in NOISE_KEYWORDS

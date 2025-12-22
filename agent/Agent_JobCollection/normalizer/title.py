@@ -2,14 +2,13 @@ import re
 from typing import Optional, Dict
 
 
-# SENIORITY
+# Cấp bật
 SENIORITY_PATTERNS = {
     "intern": r"\b(intern|internship|thực\s*tập|tts)\b",
     "junior": r"\b(junior|jr\.?|fresher|entry)\b",
     "senior": r"\b(senior|sr\.?|lead|principal|expert)\b",
     "mid": r"\b(mid|middle|experienced)\b"
 }
-
 
 # ROLE KEYWORDS (VN + EN)
 ROLE_PATTERNS = {
@@ -39,7 +38,7 @@ ROLE_PATTERNS = {
     ],
 }
 
-# Fallback role priority
+# Trả về những role ưu tiên để tránh bỏ sót role
 ROLE_PRIORITY = [
     "Robotics Engineer",
     "LLM Engineer",
@@ -50,7 +49,6 @@ ROLE_PRIORITY = [
     "AI Developer",
     "Data Scientist",
 ]
-
 
 # CLEAN TITLE
 NOISE_PATTERNS = [
@@ -76,7 +74,7 @@ def normalize_title_text(title: str) -> str:
     text = re.sub(r"\s+", " ", text).strip()
     return text
 
-# EXTRACT SENIORITY
+# Trích kinh nghiệm
 def extract_seniority(text: str) -> Optional[str]:
     for level, pattern in SENIORITY_PATTERNS.items():
         if re.search(pattern, text):
@@ -85,19 +83,11 @@ def extract_seniority(text: str) -> Optional[str]:
 
 # Tách token xữ lý những role bị tách ra và tốm gọn mà chưa được có trong patterns như AI/Robotics engineer
 def split_title_tokens(text: str) -> list[str]:
-    """
-    Split title by common separators: /, &, |, ,
-    """
     parts = re.split(r"[\/\&\|\+,]", text)
     return [p.strip() for p in parts if p.strip()]
 
-
-
-# CLASSIFY ROLE
+# Trả về role + kinh nghiệm và độ tư tin theo từ khó
 def classify_role(title: str, jd_text: Optional[str] = None) -> Dict:
-    """
-    Return canonical role + seniority + confidence
-    """
     combined_text = f"{title}\n{jd_text or ''}".lower()
     norm_title = normalize_title_text(title)
 
@@ -121,7 +111,7 @@ def classify_role(title: str, jd_text: Optional[str] = None) -> Dict:
 
     seniority = extract_seniority(title.lower())
 
-    # Confidence estimation
+    # Ước tính mức độ tư tin về role này
     confidence = 0.0
     if role:
         confidence += 0.6
