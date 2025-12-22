@@ -1,4 +1,4 @@
-from typing import Optional, Dict
+from typing import Optional, Dict, List
 from dataclasses import dataclass, field
 
 from agent.Agent_JobCollection.schema.raw_job import RawJob
@@ -28,13 +28,14 @@ class NormalizedJob:
     # Signals
     skills: list = field(default_factory=list)
     experience: Optional[Dict] = None
-    location: Optional[Dict] = None
+    location: Optional[List[Dict]] = None
 
     # Meta
     source: Optional[SourceMeta] = None
     raw_ref: Optional[str] = None  # job id / url
     debug: dict = field(default_factory=dict)
 
+# Tách location thành 1 khối riêng
 def extract_location_block(jd_text: str) -> Optional[str]:
     lines = [l.strip() for l in jd_text.splitlines() if l.strip()]
     buf = []

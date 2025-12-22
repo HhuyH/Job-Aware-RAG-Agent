@@ -34,7 +34,7 @@ def normalize_location(text: Optional[str]) -> Optional[List[Dict]]:
     locations: List[Dict] = []
 
     # Cát nhiều vì trí
-    parts = re.split(r"[\/|]+", raw)
+    parts = split_by_city(raw)
     for part in parts:
         loc = _normalize_single_location(part.strip())
         if loc:
@@ -44,7 +44,7 @@ def normalize_location(text: Optional[str]) -> Optional[List[Dict]]:
 
 
 # 1 vị trí
-def _normalize_single_location(raw: str) -> Optional[Dict]:
+def _normalize_single_location(raw: str) -> Optional[List[Dict]]:
     raw_lc = raw.lower()
     
     location = {
@@ -145,6 +145,20 @@ def extract_street(text: str) -> Optional[str]:
         return clean_street(m.group())
     return None
 
+# Tách các dịa chỉ bằng thành phố
+def split_by_city(raw: str) -> List[str]:
+    chunks = []
+    last = 0
+
+    for m in re.finditer(r"(Hồ\s*Chí\s*Minh|Hà\s*Nội|Đà\s*Nẵng)", raw, re.IGNORECASE):
+        if last != m.start():
+            chunks.append(raw[last:m.start()].strip())
+        last = m.start()
+
+    chunks.append(raw[last:].strip())
+    return [c for c in chunks if c]
+
+# ------- Các hàm làm sách text -------
 # Hàm làm sạch tên đường
 def clean_street(street: str) -> str:
     # Gộp nhiều khoảng trắng liên tiếp thành một khoảng trắng
