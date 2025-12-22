@@ -1,0 +1,155 @@
+[
+  {
+    "title": "AI Engineer",
+    "canonical_title": {
+      "role": "AI Engineer",
+      "seniority": null,
+      "normalized_title": "ai engineer",
+      "confidence": 0.6
+    },
+    "company": "CÔNG TY TNHH GIẢI PHÁP CÔNG NGHỆ APOLLO",
+    "description": "Mô tả công việc\nComputer Vision:\n- Phát triển và tối ưu hóa các mô hình thị giác máy tính cho các bài toán như nhận diện đối tượng (Object Detection), phân loại hình ảnh (Image Classification), phân đoạn hình ảnh (Image Segmentation), và xử lý video (Video Analysis).\n- Triển khai các mô hình học sâu (Deep Learning) như Convolutional Neural Networks (CNN), Generative Adversarial Networks (GAN), và Vision Transformers để cải thiện độ chính xác trong các bài toán thị giác máy tính.\n- Xây dựng các mô hình nhận dạng và phân loại khuôn mặt (Facial Recognition), phân tích hành vi (Behavior Analysis), và nhận diện ký tự quang học (OCR).\n- Xử lý, tăng cường, và chuẩn bị dữ liệu hình ảnh, bao gồm các kỹ thuật làm giàu dữ liệu\n(Data Augmentation), làm sạch dữ liệu (Data Cleaning), và tối ưu hóa các tập dữ liệu lớn (Big Data).\nPhối hợp, triển khai công việc:\n- Hợp tác với các nhóm liên quan để hiểu và xác định các yêu cầu về AI.\n- Theo dõi và đánh giá hiệu suất của các mô hình AI, điều chỉnh và cải tiến khi cần thiết.\n- Triển khai các giải pháp AI vào môi trường sản xuất và theo dõi hiệu quả hoạt động.\n- Tạo báo cáo và trình bày kết quả phân tích, đề xuất giải pháp cải tiến.\n- Phối hợp chặt chẽ với các Team: BA, DS và các bộ phận khác để hiểu và đáp ứng yêu cầu dữ liệu.\n- Thực hiện kiểm tra và duy trì chất lượng dữ liệu.\n- Theo dõi và khắc phục sự cố hệ thống dữ liệu khi cần thiết.\n- Xây dựng & triển khai dịch vụ trên hạ tầng K8s đảm bảo hiệu năng và tính sẵn sàng cao;\nYêu cầu ứng viên\n- Tốt nghiệp Đại học trở lên trong các ngành Khoa học Máy tính, Toán học, Kỹ thuật hoặc lĩnh vực liên quan.\n- Triển khai hệ thống phần mềm nhận dạng và định danh khách hàng điện tử eKYC\n- Có ít nhất 3 năm kinh nghiệm làm việc trong lĩnh vực AI/ML, đặc biệt là trong Xử lý Ngôn ngữ tự nhiên (NLP) và Thị giác Máy tính (Computer Vision)\n- Thành thạo các ngôn ngữ lập trình như Python, R và các thư viên AI/ML như TensorFLow, PyTorch, Scikit-learn, NLTK, SpaCy, OpenCV....\n- Có kinh nghiệm làm việc với các mô hình học sau (Deep Learning), học máy (Machine Learning), bao gồm các mô hình mạng nơ – ron (Neural Network), học tăng cường (Reinforcement Learning), và học máy không giám sát (Unsupervised Learning).\n- Hiểu biết về các kỹ thuật Xử lý Ngôn ngữ Tự nhiên như Word Embedding, Transformer (BERT, GPT), Sequence-to-Sequence, và các kỹ thuật Thị giác Máy tính như CNN, GAN, Object Detection, Image Segmentation.\n- Kinh nghiệm triển khai các mô hình AI trên nền tảng Docker, Kubernetes.\n- Kỹ năng giải quyết vấn đề, phân tích dữ liệu, và kỹ năng làm việc nhóm tốt.\n- Kỹ năng giải quyết vấn đề và khả năng phân tích tốt, có khả năng nghiên cứu, đánh giá và cập nhật công nghệ mới.\nQuyền lợi\n- Mức lương thương lượng theo năng lực\n- Hỗ trợ ăn sáng, ăn trưa tại công ty.\n- Thời gian làm việc 5 ngày/tuần, từ 9h00 đến 18h00.\n- Được cung cấp thiết bị làm việc (Macbook, Laptop, LCD 24”...)\n- Chính sách thưởng hấp dẫn: lương tháng thứ 13, thưởng quý và thưởng năm dựa vào hiệu quả công việc.\n- Có 12 ngày nghỉ phép theo quy định, quà sinh nhật và các phúc lợi khác theo quy định\ncủa công ty.\n- Môi trường làm việc trẻ trung. Văn phòng làm việc tiện nghi. Miễn phí trà, cafe và có tủ đồ uống,...\n- Các chương trình team building, sinh nhật thành viên, du lịch...\n- Đóng BHXH, BHYT ngay sau 2 tháng thử việc và đầy đủ các phúc lợi khác theo quy định của pháp luật.\n- Gói bảo hiểm chăm sóc sức khỏe cho nhân sự và người thân\nĐịa điểm làm việc\n(đã được cập nhật theo Danh mục Hành chính mới)\n-\nHồ Chí Minh:\nNguyễn Văn Trỗi, Phường Phú Nhuận\n-\nHà Nội:\nDuy Tân, Phường Cầu Giấy\nThời gian làm việc\nThứ 2 - Thứ 6 (từ 09:00 đến 18:00)\nThời gian làm việc: 9h00 - 18h00 (Từ Thứ 2 - Thứ 6)\nCách thức ứng tuyển\nỨng viên nộp hồ sơ trực tuyến bằng cách bấm\nỨng tuyển\nngay dưới đây.",
+    "cleaned_text": "Mô tả công việc\nComputer Vision:\n- Phát triển và tối ưu hóa các mô hình thị giác máy tính cho các bài toán như nhận diện đối tượng (Object Detection), phân loại hình ảnh (Image Classification), phân đoạn hình ảnh (Image Segmentation), và xử lý video (Video Analysis).\n- Triển khai các mô hình học sâu (Deep Learning) như Convolutional Neural Networks (CNN), Generative Adversarial Networks (GAN), và Vision Transformers để cải thiện độ chính xác trong các bài toán thị giác máy tính.\n- Xây dựng các mô hình nhận dạng và phân loại khuôn mặt (Facial Recognition), phân tích hành vi (Behavior Analysis), và nhận diện ký tự quang học (OCR).\n- Xử lý, tăng cường, và chuẩn bị dữ liệu hình ảnh, bao gồm các kỹ thuật làm giàu dữ liệu\n(Data Augmentation), làm sạch dữ liệu (Data Cleaning), và tối ưu hóa các tập dữ liệu lớn (Big Data).\nPhối hợp, triển khai công việc:\n- Hợp tác với các nhóm liên quan để hiểu và xác định các yêu cầu về AI.\n- Theo dõi và đánh giá hiệu suất của các mô hình AI, điều chỉnh và cải tiến khi cần thiết.\n- Triển khai các giải pháp AI vào môi trường sản xuất và theo dõi hiệu quả hoạt động.\n- Tạo báo cáo và trình bày kết quả phân tích, đề xuất giải pháp cải tiến.\n- Phối hợp chặt chẽ với các Team: BA, DS và các bộ phận khác để hiểu và đáp ứng yêu cầu dữ liệu.\n- Thực hiện kiểm tra và duy trì chất lượng dữ liệu.\n- Theo dõi và khắc phục sự cố hệ thống dữ liệu khi cần thiết.\n- Xây dựng & triển khai dịch vụ trên hạ tầng K8s đảm bảo hiệu năng và tính sẵn sàng cao;\nYêu cầu ứng viên\n- Tốt nghiệp Đại học trở lên trong các ngành Khoa học Máy tính, Toán học, Kỹ thuật hoặc lĩnh vực liên quan.\n- Triển khai hệ thống phần mềm nhận dạng và định danh khách hàng điện tử eKYC\n- Có ít nhất 3 năm kinh nghiệm làm việc trong lĩnh vực AI/ML, đặc biệt là trong Xử lý Ngôn ngữ tự nhiên (NLP) và Thị giác Máy tính (Computer Vision)\n- Thành thạo các ngôn ngữ lập trình như Python, R và các thư viên AI/ML như TensorFLow, PyTorch, Scikit-learn, NLTK, SpaCy, OpenCV....\n- Có kinh nghiệm làm việc với các mô hình học sau (Deep Learning), học máy (Machine Learning), bao gồm các mô hình mạng nơ – ron (Neural Network), học tăng cường (Reinforcement Learning), và học máy không giám sát (Unsupervised Learning).\n- Hiểu biết về các kỹ thuật Xử lý Ngôn ngữ Tự nhiên như Word Embedding, Transformer (BERT, GPT), Sequence-to-Sequence, và các kỹ thuật Thị giác Máy tính như CNN, GAN, Object Detection, Image Segmentation.\n- Kinh nghiệm triển khai các mô hình AI trên nền tảng Docker, Kubernetes.\n- Kỹ năng giải quyết vấn đề, phân tích dữ liệu, và kỹ năng làm việc nhóm tốt.\n- Kỹ năng giải quyết vấn đề và khả năng phân tích tốt, có khả năng nghiên cứu, đánh giá và cập nhật công nghệ mới.\n- Mức lương thương lượng theo năng lực\n- Hỗ trợ ăn sáng, ăn trưa tại công ty.\n- Thời gian làm việc 5 ngày/tuần, từ 9h00 đến 18h00.\n- Được cung cấp thiết bị làm việc (Macbook, Laptop, LCD 24”...)\n- Chính sách thưởng hấp dẫn: lương tháng thứ 13, thưởng quý và thưởng năm dựa vào hiệu quả công việc.\ncủa công ty.\n- Môi trường làm việc trẻ trung. Văn phòng làm việc tiện nghi. Miễn phí trà, cafe và có tủ đồ uống,...\n- Các chương trình team building, sinh nhật thành viên, du lịch...\n- Gói bảo hiểm chăm sóc sức khỏe cho nhân sự và người thân\nĐịa điểm làm việc\n(đã được cập nhật theo Danh mục Hành chính mới)\n- Hồ Chí Minh:\nNguyễn Văn Trỗi, Phường Phú Nhuận\n- Hà Nội:\nDuy Tân, Phường Cầu Giấy\nThời gian làm việc\nThứ 2 - Thứ 6 (từ 09:00 đến 18:00)\nThời gian làm việc: 9h00 - 18h00 (Từ Thứ 2 - Thứ 6)\nCách thức ứng tuyển\nỨng viên nộp hồ sơ trực tuyến bằng cách bấm\nỨng tuyển\nngay dưới đây.",
+    "skills": [
+      "artificial intelligence",
+      "deep learning",
+      "docker",
+      "kubernetes",
+      "machine learning",
+      "nlp",
+      "python",
+      "pytorch",
+      "scikit-learn",
+      "tensorflow",
+      "transformer"
+    ],
+    "experience": {
+      "min_years": 3.0,
+      "max_years": null,
+      "levels": [
+        "mid",
+        "senior"
+      ],
+      "signals": [
+        {
+          "type": "minimum",
+          "raw": "ít nhất 3 năm"
+        }
+      ],
+      "raw_texts": [
+        "ít nhất 3 năm"
+      ]
+    },
+    "location": [
+      {
+        "raw": "Hồ Chí Minh: Nguyễn Văn Trỗi, Phường Phú Nhuận",
+        "type": "onsite",
+        "country": "Vietnam",
+        "city": "Ho Chi Minh",
+        "district": null,
+        "ward": "Phú Nhuận",
+        "street": null,
+        "granularity": "address",
+        "confidence": 0.65
+      },
+      {
+        "raw": "Hà Nội: Duy Tân, Phường Cầu Giấy",
+        "type": "onsite",
+        "country": "Vietnam",
+        "city": "Ha Noi",
+        "district": null,
+        "ward": "Cầu Giấy",
+        "street": null,
+        "granularity": "address",
+        "confidence": 0.65
+      }
+    ],
+    "source_url": "https://www.topcv.vn/viec-lam/ai-engineer/1991868.html?ta_source=JobSearchList_LinkDetail&u_sr_id=ZQy0IXYsUnOOlg6uA38TAkO6aPHEjhk7Hkb6gJEk_1766402492",
+    "debug": {
+      "raw_title": "AI Engineer",
+      "raw_location": "Hồ Chí Minh, Hà Nội",
+      "extracted_keywords": [
+        "machine learning",
+        "python",
+        "ai",
+        "deep learning",
+        "nlp"
+      ]
+    }
+  },
+  {
+    "title": "Giảng Viên IELTS Part-Time (Online/Offline) | Thu Nhập 15–35 Triệu/Tháng | Giáo Trình Có Sẵn – Ứng Dụng AI Hỗ Trợ Chấm Bài",
+    "canonical_title": {
+      "role": null,
+      "seniority": null,
+      "normalized_title": "giảng viên ielts | thu nhập 15–35 triệu/tháng | giáo trình có sẵn – ứng dụng ai hỗ trợ chấm bài",
+      "confidence": 0.0
+    },
+    "company": "Công ty Cổ phần Đầu tư HBR Holdings",
+    "description": "Mô tả công việc\nGiảng dạy chương trình IELTS theo hình thức Online\n(Zoom Pro do trung tâm cung cấp)\nhoặc\nOffline tại cơ sở\n, giảng viên được lựa chọn hình thức phù hợp với điều kiện cá nhân.\nGiảng dạy theo\ngiáo trình độc quyền, chuẩn hóa 100%\n, không yêu cầu soạn giáo án.\nChủ động\nđăng ký hoặc nhận lớp theo lịch cá nhân\nlinh hoạt.\nĐồng hành và hỗ trợ học viên phát triển toàn diện 4 kỹ năng IELTS, đảm bảo mục tiêu đầu ra.\nWebsite\nđộc quyền tích hợp AI\nhỗ trợ chấm – chữa bài, tối ưu hiệu quả giảng dạy cho cả lớp Online và Offline.\nYêu cầu ứng viên\nIELTS Academic Overall từ\n8.0\ntrở lên, trong đó Speaking tối thiểu 7.0 (chấp nhận chứng chỉ đã hết hạn).\nKhông yêu cầu kinh nghiệm\n, ứng viên sẽ được đào tạo bài bản trước khi nhận lớp.\nYêu thích công việc giảng dạy, có tinh thần trách nhiệm, kiên nhẫn và đam mê lĩnh vực giáo dục.\nKỹ năng giao tiếp tốt, chủ động trong công việc, có tư duy học hỏi và phát triển bản thân.\nSử dụng laptop cá nhân; đối với hình thức Online yêu cầu đường truyền Internet ổn định.\nQuyền lợi\n1. Thu nhập\nTổng thu nhập:\n15 – 35 triệu VNĐ/tháng\nLương giảng dạy theo buổi (2 giờ):\n⇢ Online:\n420.000 – 800.000 VNĐ/buổi\n⇢ Offline:\n500.000 – 840.000 VNĐ/buổi\n2. Thưởng & phụ cấp\nThưởng chấm – chữa bài:\n⇢ Online:\n480.000 – 3.000.000 VNĐ/lớp\n⇢ Offline:\n640.000 – 4.500.000 VNĐ/lớp\nThưởng lớp kiểu mẫu:\n1.000.000 VNĐ/lớp\nTăng lương phân bậc giảng viên theo đánh giá chất lượng giảng dạy.\nPhụ cấp đi lại:\n60.000 VNĐ/buổi dạy\n3. Hỗ trợ & công cụ giảng dạy\nGiáo trình chuẩn hóa, đầy đủ, giúp tối ưu thời gian chuẩn bị bài.\nHệ thống chấm bài tập riêng cùng\nphần mềm AI hỗ trợ chấm Writing.\n4. Đào tạo & phát triển\nTham gia khóa đào tạo Giảng viên NLP & ELC miễn phí ngay khi nhận việc\n(trị giá 4.990.000 VNĐ, thời gian 2–4 tuần).\nReview lương định kỳ hàng năm\ndựa trên năng lực và thâm niên, cơ chế rõ ràng.\nCơ hội tham gia các chương trình đào tạo nâng cao chuyên môn,\nngân sách lên tới 100.000.000 VNĐ/người/năm.\n5. Môi trường làm việc & ưu đãi\nĐội ngũ giảng viên trẻ trung, chuyên môn cao (IELTS từ 8.0 trở lên).\nMôi trường làm việc chuyên nghiệp, gắn kết, khuyến khích sáng tạo và học tập liên tục.\nGiảng viên và người thân được\nưu đãi học phí\ncho toàn bộ chương trình thuộc hệ thống\nHBR Holdings.\nĐịa điểm làm việc\n(đã được cập nhật theo Danh mục Hành chính mới)\n-\nHà Nội:\n(Tất cả phường)\n-\nHồ Chí Minh:\n(Tất cả phường)\n-\nBắc Ninh:\n(Tất cả phường)\n-\nNước Ngoài:\n-\nĐà Nẵng:\n(Tất cả phường)\n-\nHưng Yên:\n(Tất cả phường)\n-\nHải Phòng:\n(Tất cả phường)\n-\nHà Tĩnh:\n(Tất cả phường)\n-\nQuảng Trị:\n(Tất cả phường)\n-\nNghệ An:\n(Tất cả phường)\n-\nCà Mau:\n(Tất cả phường)\n-\nĐồng Nai:\n(Tất cả phường)\n...và 9 địa điểm khác\nThu gọn\nThời gian làm việc\nGV tự chọn:\nCó 2 khung giờ: 17h45-19h45 và 20h00-22h00\nCó 2 loại lớp: 2 buổi/1 tuần và 3 buổi/1 tuần\nCách thức ứng tuyển\nỨng viên nộp hồ sơ trực tuyến bằng cách bấm\nỨng tuyển\nngay dưới đây.",
+    "cleaned_text": "Mô tả công việc\nGiảng dạy chương trình IELTS theo hình thức Online\n(Zoom Pro do trung tâm cung cấp)\nhoặc\nOffline tại cơ sở\n, giảng viên được lựa chọn hình thức phù hợp với điều kiện cá nhân.\nGiảng dạy theo\ngiáo trình độc quyền, chuẩn hóa 100%\n, không yêu cầu soạn giáo án.\nChủ động\nđăng ký hoặc nhận lớp theo lịch cá nhân\nlinh hoạt.\nĐồng hành và hỗ trợ học viên phát triển toàn diện 4 kỹ năng IELTS, đảm bảo mục tiêu đầu ra.\nđộc quyền tích hợp AI\nhỗ trợ chấm – chữa bài, tối ưu hiệu quả giảng dạy cho cả lớp Online và Offline.\nYêu cầu ứng viên\nIELTS Academic Overall từ\n8.0\ntrở lên, trong đó Speaking tối thiểu 7.0 (chấp nhận chứng chỉ đã hết hạn).\nKhông yêu cầu kinh nghiệm\n, ứng viên sẽ được đào tạo bài bản trước khi nhận lớp.\nYêu thích công việc giảng dạy, có tinh thần trách nhiệm, kiên nhẫn và đam mê lĩnh vực giáo dục.\nKỹ năng giao tiếp tốt, chủ động trong công việc, có tư duy học hỏi và phát triển bản thân.\nSử dụng laptop cá nhân; đối với hình thức Online yêu cầu đường truyền Internet ổn định.\n1. Thu nhập\nTổng thu nhập:\n15 – 35 triệu VNĐ/tháng\nLương giảng dạy theo buổi (2 giờ):\n⇢ Online:\n420.000 – 800.000 VNĐ/buổi\n⇢ Offline:\n500.000 – 840.000 VNĐ/buổi\n2. Thưởng & phụ cấp\nThưởng chấm – chữa bài:\n⇢ Online:\n480.000 – 3.000.000 VNĐ/lớp\n⇢ Offline:\n640.000 – 4.500.000 VNĐ/lớp\nThưởng lớp kiểu mẫu:\n1.000.000 VNĐ/lớp\nTăng lương phân bậc giảng viên theo đánh giá chất lượng giảng dạy.\nPhụ cấp đi lại:\n60.000 VNĐ/buổi dạy\n3. Hỗ trợ & công cụ giảng dạy\nGiáo trình chuẩn hóa, đầy đủ, giúp tối ưu thời gian chuẩn bị bài.\nHệ thống chấm bài tập riêng cùng\nphần mềm AI hỗ trợ chấm Writing.\n4. Đào tạo & phát triển\nTham gia khóa đào tạo Giảng viên NLP & ELC miễn phí ngay khi nhận việc\n(trị giá 4.990.000 VNĐ, thời gian 2–4 tuần).\nReview lương định kỳ hàng năm\ndựa trên năng lực và thâm niên, cơ chế rõ ràng.\nCơ hội tham gia các chương trình đào tạo nâng cao chuyên môn,\nngân sách lên tới 100.000.000 VNĐ/người/năm.\n5. Môi trường làm việc & ưu đãi\nĐội ngũ giảng viên trẻ trung, chuyên môn cao (IELTS từ 8.0 trở lên).\nMôi trường làm việc chuyên nghiệp, gắn kết, khuyến khích sáng tạo và học tập liên tục.\nGiảng viên và người thân được\nưu đãi học phí\ncho toàn bộ chương trình thuộc hệ thống\nHBR Holdings.\nĐịa điểm làm việc\n(đã được cập nhật theo Danh mục Hành chính mới)\n- Hà Nội:\n(Tất cả phường)\n- Hồ Chí Minh:\n(Tất cả phường)\n- Bắc Ninh:\n(Tất cả phường)\n- Nước Ngoài:\n- Đà Nẵng:\n(Tất cả phường)\n- Hưng Yên:\n(Tất cả phường)\n- Hải Phòng:\n(Tất cả phường)\n- Hà Tĩnh:\n(Tất cả phường)\n- Quảng Trị:\n(Tất cả phường)\n- Nghệ An:\n(Tất cả phường)\n- Cà Mau:\n(Tất cả phường)\n- Đồng Nai:\n(Tất cả phường)\n...và 9 địa điểm khác\nThu gọn\nThời gian làm việc\nGV tự chọn:\nCó 2 khung giờ: 17h45-19h45 và 20h00-22h00\nCó 2 loại lớp: 2 buổi/1 tuần và 3 buổi/1 tuần\nCách thức ứng tuyển\nỨng viên nộp hồ sơ trực tuyến bằng cách bấm\nỨng tuyển\nngay dưới đây.",
+    "skills": [
+      "artificial intelligence",
+      "nlp"
+    ],
+    "experience": {
+      "min_years": 0.0,
+      "max_years": 0.0,
+      "levels": [
+        "intern",
+        "junior"
+      ],
+      "signals": [
+        {
+          "type": "no_experience",
+          "raw": "intern"
+        }
+      ],
+      "raw_texts": []
+    },
+    "location": [
+      {
+        "raw": "Hà Nội: (Tất cả phường)",
+        "type": "onsite",
+        "country": "Vietnam",
+        "city": "Ha Noi",
+        "district": null,
+        "ward": null,
+        "street": null,
+        "granularity": "city",
+        "confidence": 0.5
+      },
+      {
+        "raw": "Hồ Chí Minh: (Tất cả phường)   Bắc Ninh: (Tất cả phường)   Nước Ngoài:",
+        "type": "onsite",
+        "country": "Vietnam",
+        "city": "Ho Chi Minh",
+        "district": null,
+        "ward": null,
+        "street": null,
+        "granularity": "city",
+        "confidence": 0.5
+      },
+      {
+        "raw": "Đà Nẵng: (Tất cả phường)   Hưng Yên: (Tất cả phường)   Hải Phòng: (Tất cả phường)   Hà Tĩnh: (Tất cả phường)   Quảng Trị: (Tất cả phường)   Nghệ An: (Tất cả phường)   Cà Mau: (Tất cả phường)   Đồng Nai: (Tất cả phường) ...và 9 địa điểm khác Thu gọn",
+        "type": "onsite",
+        "country": "Vietnam",
+        "city": "Da Nang",
+        "district": "District uảng Trị",
+        "ward": null,
+        "street": null,
+        "granularity": "district",
+        "confidence": 0.7
+      }
+    ],
+    "source_url": "https://www.topcv.vn/viec-lam/giang-vien-ielts-part-time-online-offline-thu-nhap-1535-trieu-thang-giao-trinh-co-san-ung-dung-ai-ho-tro-cham-bai/1991136.html?ta_source=JobSearchList_LinkDetail&u_sr_id=ZQy0IXYsUnOOlg6uA38TAkO6aPHEjhk7Hkb6gJEk_1766402492",
+    "debug": {
+      "raw_title": "Giảng Viên IELTS Part-Time (Online/Offline) | Thu Nhập 15–35 Triệu/Tháng | Giáo Trình Có Sẵn – Ứng Dụng AI Hỗ Trợ Chấm Bài",
+      "raw_location": "Hồ Chí Minh & 11 nơi khác",
+      "extracted_keywords": [
+        "ai",
+        "nlp"
+      ]
+    }
+  }
+]

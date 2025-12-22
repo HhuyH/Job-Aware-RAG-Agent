@@ -1,7 +1,7 @@
-from pprint import pformat
 from agent.Agent_JobCollection.adapters.topcv import TopCVAdapter
 from agent.Agent_JobCollection.schema.search_intent import SearchIntent
 from agent.Agent_JobCollection.normalizer.job_normalizer import JobNormalizer
+from agent.Agent_JobCollection.job_saver import save_jobs
 from common.logger import get_logger
 
 logger = get_logger("agent.job.test")
@@ -53,3 +53,8 @@ if __name__ == "__main__":
     for i, raw_job in enumerate(raw_jobs, 1):
         normalized = normalizer.normalize(raw_job)
         print_job(normalized, i)
+        
+    normalized_jobs = [normalizer.normalize(rj) for rj in raw_jobs]
+
+    # Lưu thông tin job vào file excel và json
+    save_jobs(normalized_jobs)
