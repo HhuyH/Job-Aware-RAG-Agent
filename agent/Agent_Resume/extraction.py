@@ -1,7 +1,7 @@
 # File này trích xuất dữ liệu có cấu trúc từ từng section CV (identity, skills, tools, projects, work experience, certifications…) 
 # bằng regex + heuristic, chuyển text đã structure thành excel chuẩn để downstream dùng trực tiếp.
 
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Tuple
 from dataclasses import dataclass, asdict
 from common.logger import get_logger
 from common.json_logger import dump_json
@@ -32,6 +32,7 @@ class Certification:
 class SkillItem:
     name: str
     level: str  # core | exposure | familiar
+    subskills: Optional[List[str]] = None
 
 @dataclass
 class SkillSet:
@@ -48,9 +49,6 @@ class Tool:
 class Identity:
     name: str
     role: str
-from typing import List, Optional
-from dataclasses import dataclass
-import re
 
 @dataclass
 class WorkExperience:
@@ -61,9 +59,6 @@ class WorkExperience:
     description: str
 
 # ---------- Các hàm xử lý các section ----------
-
-ROLE_KEYWORDS = ["engineer", "intern", "junior", "fresher", "developer", "ai", "ml"]
-
 def extract_identity(identity_text: str) -> Identity:
     lines = [line.strip() for line in identity_text.splitlines() if line.strip()]
     if not lines:
@@ -86,57 +81,159 @@ def extract_identity(identity_text: str) -> Identity:
 
     return Identity(name=name, role=role)
 
-# Extractor Functions
+# Ghép các dòng multiline cho skill/project trước khi extract.
+def preprocess_lines(text: str) -> list[str]:
+    lines = text.splitlines()
+    new_lines = []
+    buffer = ""
+    for line in lines:
+        line = line.strip()
+        if line.startswith("•"):
+            if buffer:
+                new_lines.append(buffer)
+            buffer = line
+        else:
+            # Nếu dòng trước buffer kết thúc bằng dấu '-', nối tiếp
+            if buffer.endswith("-") or len(buffer) < 80:
+                buffer += " " + line
+            else:
+                new_lines.append(buffer)
+                buffer = line
+    if buffer:
+        new_lines.append(buffer)
+    return new_lines
+
+# Trích phân loại skills 
 def extract_skills(text: str) -> SkillSet:
-    SECTION_MAP = {
-        "programming languages": "languages",
-        "frameworks": "frameworks",
-        "frameworks & technologies": "frameworks",
-        "ai / machine learning": "ml",
-        "database": "databases",
-    }
+    skills = { "languages": [], "frameworks": [], "ml": [], "databases": [] }
 
-    LEVEL_HINTS = {
-        "core": ["core", "strong", "primary"],
-        "exposure": ["optional", "exposure", "familiar", "basic"]
-    }
+    def smart_split(text: str) -> Tuple[str, List[str]]:
+        """
+        Tách main skill và subskills nếu có dấu ngoặc, kể cả khi đóng ngoặc thiếu
+        """
+        text = text.strip().rstrip(").")  # loại bỏ dấu dư cuối
+        # Thử match chuẩn
+        m = re.match(r"^(.*?)\s*\((.+)\)$", text)
+        if m:
+            main_skill = m.group(1).strip()
+            subskills = [s.strip() for s in m.group(2).split(",") if s.strip()]
+            return main_skill, subskills
 
-    skills = {
-        "languages": [],
-        "frameworks": [],
-        "ml": [],
-        "databases": [],
-    }
+        # fallback: tìm '(' nhưng không có ')'
+        if "(" in text:
+            parts = text.split("(", 1)
+            main_skill = parts[0].strip()
+            subskills = [s.strip() for s in parts[1].split(",") if s.strip()]
+            return main_skill, subskills
 
-    current_category = None
-    current_level = "core"
+        return text, []
 
-    for line in text.splitlines():
-        l = line.lower().strip()
 
-        # detect section
-        for header, cat in SECTION_MAP.items():
-            if header in l:
-                current_category = cat
-                current_level = "core"
+    def split_top_level_commas(text: str) -> List[str]:
+        """
+        Tách text theo dấu phẩy nhưng bỏ qua dấu trong ngoặc
+        """
+        items = []
+        buffer = ""
+        depth = 0
+        for c in text:
+            if c == "(":
+                depth += 1
+                buffer += c
+            elif c == ")":
+                depth -= 1
+                buffer += c
+            elif c == "," and depth == 0:
+                items.append(buffer.strip())
+                buffer = ""
+            else:
+                buffer += c
+        if buffer:
+            items.append(buffer.strip())
+        return items
+
+    for section_header, category in SECTION_MAP.items():
+        pattern = re.compile(rf"{re.escape(section_header)}\s*:?", re.IGNORECASE)
+        match = pattern.search(text)
+        if not match:
+            continue
+
+        start_idx = match.end()
+        next_headers = [h for h in SECTION_MAP.keys() if h.lower() != section_header.lower()]
+        end_idx = len(text)
+        for nh in next_headers:
+            nh_pattern = re.compile(rf"{re.escape(nh)}\s*:?", re.IGNORECASE)
+            nh_match = nh_pattern.search(text, pos=start_idx)
+            if nh_match:
+                end_idx = nh_match.start()
                 break
 
-        # detect level
-        for level, hints in LEVEL_HINTS.items():
-            if any(h in l for h in hints):
-                current_level = level
+        section_text = text[start_idx:end_idx].strip()
+        if not section_text:
+            continue
 
-        # extract bullet list
-        if current_category and ("•" in line or "," in line):
-            items = re.split(r"[•,]", line)
-            for item in items:
-                name = item.strip()
-                if name and len(name) > 1:
-                    skills[current_category].append(
-                        SkillItem(name=name, level=current_level)
-                    )
+        lines = preprocess_lines(section_text)
+        for raw in lines:
+            line = raw.strip()
+            if not line.startswith("•"):
+                continue
+
+            content = line.lstrip("•").strip()
+            l = content.lower()
+
+            # xác định level
+            if any(k in l for k in ["experience", "proficient", "advanced"]):
+                level = "core"
+            elif any(k in l for k in ["familiar", "basic"]):
+                level = "exposure"
+            else:
+                level = "core"
+
+            # Normalize
+            normalized = False
+            for pattern, name in NORMALIZE_MAP.items():
+                if re.search(pattern, content, flags=re.IGNORECASE):
+                    skills[category].append(SkillItem(name=name, level=level))
+                    normalized = True
+                    break
+            if normalized:
+                continue
+
+            # Tách từng item, giữ subskills trong ngoặc
+            raw_items = split_top_level_commas(content)
+            for item in raw_items:
+                main_skill, subskills = smart_split(item)
+                skills[category].append(SkillItem(name=main_skill, level=level, subskills=subskills))
+
+    # Dedupe toàn bộ category (giữ subskills union)
+    for cat in skills.keys():
+        seen = {}
+        unique_items = []
+        for s in skills[cat]:
+            key = (s.name.lower(), s.level)
+            if key in seen:
+                existing = seen[key]
+                if s.subskills:
+                    if existing.subskills:
+                        existing.subskills = list(set(existing.subskills + s.subskills))
+                    else:
+                        existing.subskills = s.subskills
+            else:
+                unique_items.append(s)
+                seen[key] = s
+        skills[cat] = unique_items
 
     return SkillSet(**skills)
+
+
+def is_short_skill_list(line: str) -> bool:
+    if any(k in line.lower() for k in [
+        "experience", "integrat", "pipeline", "workflow", "system"
+    ]):
+        return False
+    if "(" in line or ")" in line:
+        return False
+    return "," in line and len(line.split(",")) <= 4
 
 # Extract Tools
 def extract_tools(text: str) -> List[Dict[str, str]]:
@@ -170,15 +267,6 @@ def extract_tools(text: str) -> List[Dict[str, str]]:
 
 # Extract Certifications
 def extract_certifications(text: str) -> List[Certification]:
-    CERT_PATTERN = re.compile(
-        r"""
-        (?P<name>TOEIC|IELTS|JLPT|HSK|CEFR)
-        [^\d]{0,10}
-        (?P<score>\d{2,4})?
-        """,
-        re.IGNORECASE | re.VERBOSE
-    )
-
     certs = []
     for line in text.splitlines():
         m = CERT_PATTERN.search(line)
@@ -191,15 +279,6 @@ def extract_certifications(text: str) -> List[Certification]:
             )
     return certs
 
-# Trích xuất tín hiệu project và những gì đuoc
-PROJECT_SIGNAL_KEYWORDS = {
-    "llm": ["llm", "gpt", "rag", "langchain"],
-    "backend": ["api", "fastapi", "flask", "backend"],
-    "ml_training": ["training", "fine-tuning", "loss", "epoch"],
-    "ml_inference": ["inference", "predict", "serving"],
-    "data": ["dataset", "etl", "pipeline"],
-    "production": ["deploy", "docker", "kubernetes", "production"]
-}
 
 def infer_project_signals(text: str) -> dict:
     text = text.lower()
@@ -207,11 +286,6 @@ def infer_project_signals(text: str) -> dict:
     for signal, keywords in PROJECT_SIGNAL_KEYWORDS.items():
         signals[signal] = any(re.search(rf"\b{k}\b", text) for k in keywords)
     return signals
-
-PROJECT_TITLE_PATTERN = re.compile(
-    r"^(?P<title>.+?)\s+—\s+(?P<role>.+)$",
-    re.MULTILINE
-)
 
 # Tách project blocks
 def split_projects(text: str) -> List[str]:
@@ -225,7 +299,7 @@ def split_projects(text: str) -> List[str]:
 
     return blocks
 
-# trích xuất project từ block
+# Trích xuất project từ block
 def extract_project(block: str) -> Optional[Project]:
     lines = block.splitlines()
     if not lines:
@@ -254,19 +328,7 @@ def extract_project(block: str) -> Optional[Project]:
         signals=infer_project_signals(block)
     )
 
-# Regex patterns để detect title + duration
-WORK_TITLE_PATTERN = re.compile(
-    r"""
-    ^(?P<company>.+?)\s*[-–—@]\s*(?P<role>.+)$   # Company — Role hoặc Role @ Company
-    """,
-    re.MULTILINE | re.VERBOSE
-)
-
-DURATION_PATTERN = re.compile(
-    r"(?P<start>[A-Za-z]{3,9} \d{4})\s*[-–to]+\s*(?P<end>[A-Za-z]{3,9} \d{4}|Present)",
-    re.IGNORECASE
-)
-
+# Trích xuất kinh nghiệm
 def extract_work_experience(text: str) -> List[WorkExperience]:
     lines = [line.strip() for line in text.splitlines() if line.strip()]
     experiences = []
@@ -308,7 +370,6 @@ def extract_work_experience(text: str) -> List[WorkExperience]:
     return experiences
 
 # ---------- Các hàm xữ lý chung ----------
-
 # Xữ lý tên file excel bằng cách loại bỏ dấu và ký tự đặc biệt ở tên của người trong CV
 def slugify_name(name: str) -> str:
     name = unicodedata.normalize("NFKD", name)
@@ -357,9 +418,9 @@ def save_to_excel(structured: Dict[str, Any], excel_path: Path | None = None) ->
     name = identity.get("name", "UNKNOWN")
 
     if excel_path is None:
-        excel_path = Path("data") / f"{slugify_name(name)}.xlsx"
+        excel_path = Path("data") / "cv" / f"{slugify_name(name)}.xlsx"
 
-    excel_path.parent.mkdir(exist_ok=True)
+    excel_path.parent.mkdir(parents=True, exist_ok=True)
 
     # Projects
     projects_data = []
@@ -399,18 +460,22 @@ def save_to_excel(structured: Dict[str, Any], excel_path: Path | None = None) ->
 
     return excel_path
 
-# Section Mapping
-SECTION_EXTRACTORS = {
-    "identity": lambda text: asdict(extract_identity(text)),
-    "skills": lambda text: asdict(extract_skills(text)),
-    "tools": extract_tools,
-    "certifications": lambda text: [asdict(c) for c in extract_certifications(text)],
-    "projects": lambda text: [asdict(p) for p in map(extract_project, split_projects(text)) if p],
-    "work experience": lambda text: [asdict(w) for w in extract_work_experience(text)],
-    # có thể thêm section mới dễ dàng
-}
+# Lưu dữ liệu đã chuẩn hóa ra file Json
+def save_to_json(structured: Dict[str, Any], json_path: Path | None = None) -> Path:
+    identity = structured.get("identity", {})
+    name = identity.get("name", "UNKNOWN")
 
-# Main Extraction Function
+    if json_path is None:
+        json_path = Path("data") / "cv" / f"{slugify_name(name)}.json"
+
+    json_path.parent.mkdir(parents=True, exist_ok=True)
+
+    with open(json_path, "w", encoding="utf-8") as f:
+        json.dump(structured, f, ensure_ascii=False, indent=2)
+
+    return json_path
+
+# Hàm xữ lý chính 
 def extract_from_sections(sections: Dict[str, str]) -> Dict[str, Any]:
     logger.info("Start extraction")
 
@@ -422,9 +487,87 @@ def extract_from_sections(sections: Dict[str, str]) -> Dict[str, Any]:
             extracted[section.lower()] = extractor(text)
 
     map_role(extracted)
-    save_to_excel(extracted)
 
-    logger.info("Extraction completed & saved to Excel")
+    json_path = save_to_json(extracted)
+    excel_path = save_to_excel(extracted)
+
+    logger.info(f"Extraction completed")
+    logger.info(f"Saved JSON  : {json_path}")
+    logger.info(f"Saved Excel : {excel_path}")
+
     return extracted
 
+# ---------- PATTERNS ----------
+# Role keywords
+ROLE_KEYWORDS = ["engineer", "intern", "junior", "fresher", "developer", "ai", "ml"]
 
+# Section Mapping
+SECTION_EXTRACTORS = {
+    "identity": lambda text: asdict(extract_identity(text)),
+    "skills": lambda text: asdict(extract_skills(text)),
+    "tools": extract_tools,
+    "certifications": lambda text: [asdict(c) for c in extract_certifications(text)],
+    "projects": lambda text: [asdict(p) for p in map(extract_project, split_projects(text)) if p],
+    "work experience": lambda text: [asdict(w) for w in extract_work_experience(text)],
+    # có thể thêm section
+}
+
+# Regex patterns để detect title + duration
+WORK_TITLE_PATTERN = re.compile(
+    r"""
+    ^(?P<company>.+?)\s*[-–—@]\s*(?P<role>.+)$   # Company — Role hoặc Role @ Company
+    """,
+    re.MULTILINE | re.VERBOSE
+)
+
+SECTION_MAP = {
+    "programming languages": "languages",
+    "frameworks": "frameworks",
+    "frameworks & technologies": "frameworks",
+    "ai / machine learning": "ml",
+    "database": "databases",
+}
+
+LEVEL_HINTS = {
+    "exposure": ["familiar", "basic", "exposure"],
+}
+
+# Pattern thời gian dự án 
+DURATION_PATTERN = re.compile(
+    r"(?P<start>[A-Za-z]{3,9} \d{4})\s*[-–to]+\s*(?P<end>[A-Za-z]{3,9} \d{4}|Present)",
+    re.IGNORECASE
+)
+
+# Trích xuất tín hiệu project và những gì đuoc
+PROJECT_SIGNAL_KEYWORDS = {
+    "llm": ["llm", "gpt", "rag", "langchain"],
+    "backend": ["api", "fastapi", "flask", "backend"],
+    "ml_training": ["training", "fine-tuning", "loss", "epoch"],
+    "ml_inference": ["inference", "predict", "serving"],
+    "data": ["dataset", "etl", "pipeline"],
+    "production": ["deploy", "docker", "kubernetes", "production"]
+}
+
+# Tiêu đề project tuy nhiên nếu có các dạng phực tập hoặc khác thì khó tách được
+PROJECT_TITLE_PATTERN = re.compile(
+    r"^(?P<title>.+?)\s+—\s+(?P<role>.+)$",
+    re.MULTILINE
+)
+
+CERT_PATTERN = re.compile(
+    r"""
+    (?P<name>TOEIC|IELTS|JLPT|HSK|CEFR)
+    [^\d]{0,10}
+    (?P<score>\d{2,4})?
+    """,
+    re.IGNORECASE | re.VERBOSE
+)
+
+NORMALIZE_MAP = {
+    r"retrieval\s*-\s*augmented generation.*": "RAG",
+    r"llm workflow orchestration.*": "LLM Orchestration",
+    r"conversational ai.*multi-turn.*": "Conversational AI",
+    r"data preprocessing.*": "Data Preprocessing",
+    r"model training.*": "Model Training",
+    r"experience integrating llm-based.*": "LLM Integration"
+}

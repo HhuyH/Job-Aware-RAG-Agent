@@ -36,15 +36,15 @@ def normalize_location(text: Optional[str]) -> Optional[List[Dict]]:
     # Cát nhiều vì trí
     parts = split_by_city(raw)
     for part in parts:
-        loc = _normalize_single_location(part.strip())
+        loc = normalize_single_location(part.strip())
         if loc:
             locations.append(loc)
 
     return locations or None
 
 
-# 1 vị trí
-def _normalize_single_location(raw: str) -> Optional[List[Dict]]:
+# Chuẩn hóa từng vị trí
+def normalize_single_location(raw: str) -> Optional[List[Dict]]:
     raw_lc = raw.lower()
     
     location = {
@@ -58,6 +58,12 @@ def _normalize_single_location(raw: str) -> Optional[List[Dict]]:
         "granularity": "unknown",
         "confidence": 0.0
     }
+    
+    # Remove city prefix nếu có
+    if ":" in raw:
+        raw_for_address = raw.split(":", 1)[1].strip()
+    else:
+        raw_for_address = raw
 
     # trích thành phố
     city = extract_city(raw_lc)
@@ -67,32 +73,34 @@ def _normalize_single_location(raw: str) -> Optional[List[Dict]]:
         location["confidence"] += 0.5
         location["granularity"] = "city"
 
-    # Remove city prefix nếu có
-    if ":" in raw:
-        raw_for_address = raw.split(":", 1)[1].strip()
-    else:
-        raw_for_address = raw
+    segments = split_address_segments(raw_for_address)
 
-    # Trích quận huyện
-    district = extract_district(raw_for_address)
-    if district:
-        location["district"] = district
-        location["confidence"] += 0.2
-        location["granularity"] = "district"
+    for seg in segments:
+        if not location["street"]:
+            # Trích đường
+            street = extract_street(seg)
+            if street:
+                location["street"] = street
+                location["confidence"] += 0.15
+                location["granularity"] = "address"
+                continue
 
-    # Trích phường xã
-    ward = extract_ward(raw_for_address)
-    if ward:
-        location["ward"] = ward
-        location["confidence"] += 0.15
-        location["granularity"] = "address"
+        if not location["ward"]:
+            # Trích phường xã
+            ward = extract_ward(seg)
+            if ward:
+                location["ward"] = ward
+                location["confidence"] += 0.15
+                location["granularity"] = "address"
+                continue
 
-    # Trích đường
-    street = extract_street(raw_for_address)
-    if street:
-        location["street"] = street
-        location["confidence"] += 0.15
-        location["granularity"] = "address"
+        if not location["district"]:
+            # Trích huyện quân
+            district = extract_district(seg)
+            if district:
+                location["district"] = district
+                location["confidence"] += 0.2
+                location["granularity"] = "district"
 
     # Nếu confidence quá thấp thì bỏ
     if location["confidence"] < 0.3:
@@ -143,6 +151,8 @@ def extract_street(text: str) -> Optional[str]:
     m = STREET_PATTERN.search(text)
     if m:
         return clean_street(m.group())
+    if "phường" in text.lower() or "ward" in text.lower():
+        return None
     return None
 
 # Tách các dịa chỉ bằng thành phố
@@ -157,6 +167,9 @@ def split_by_city(raw: str) -> List[str]:
 
     chunks.append(raw[last:].strip())
     return [c for c in chunks if c]
+
+def split_address_segments(text: str) -> list[str]:
+    return [seg.strip() for seg in text.split(",") if seg.strip()]
 
 # ------- Các hàm làm sách text -------
 # Hàm làm sạch tên đường
@@ -192,8 +205,10 @@ DISTRICT_PATTERN = re.compile(
 
 # Phường xã
 WARD_PATTERN = re.compile(
-    r"(phường|p\.?|ward)\s*([A-Za-zÀ-ỹ0-9\s,.-]{1,50})", re.IGNORECASE
+    r"(phường|p\.?|ward)\s+([A-Za-zÀ-ỹ0-9\s]{1,30})$",
+    re.IGNORECASE
 )
+
 
 # Từ khóa ko cần thiết
 INVALID_WARD_KEYWORDS = [

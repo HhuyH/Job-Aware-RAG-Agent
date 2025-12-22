@@ -16,6 +16,7 @@ logger = get_logger("agent.resume.perception")
 BASE_DIR = Path(__file__).resolve().parents[2]
 RESUME_DIR = BASE_DIR / "resumes"
 
+# Trích xuất text từ pdf
 def extract_text_from_pdf(pdf_path: Path) -> str:
     return extract_text(str(pdf_path))
 

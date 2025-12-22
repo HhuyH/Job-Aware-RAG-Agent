@@ -49,7 +49,7 @@ if __name__ == "__main__":
     # In ra tất cả section đã làm sạch
     # log_sections(structured)
 
-    # Trích xuất thông tin từ các section đã chia và lưu vào excel
+    # Trích xuất thông tin từ các section đã chia và lưu vào excel và json
     extract_from_sections(structured)
     
     

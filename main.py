@@ -6,6 +6,34 @@ from common.logger import get_logger
 
 logger = get_logger("agent.job.test")
 
+# Hàm in kết quả
+def print_job(job, idx):
+    print(f"\n{'='*20} Job {idx} {'='*20}")
+    print(f"Canonical title : {job.canonical_title}")
+    
+    print("\nSkills:")
+    for s in job.skills:
+        print(f"  - {s}")
+
+    print("\nExperience:")
+    if job.experience:
+        for k, v in job.experience.items():
+            print(f"  {k}: {v}")
+    else:
+        print("  None")
+
+    print("\nLocations:")
+    if job.location:
+        for loc in job.location:
+            print(f"  - City      : {loc.get('city')}")
+            print(f"    District  : {loc.get('district')}")
+            print(f"    Ward      : {loc.get('ward')}")
+            print(f"    Street    : {loc.get('street')}")
+            print(f"    Type      : {loc.get('type')}")
+            print(f"    Confidence: {loc.get('confidence')}")
+    else:
+        print("  None")
+
 if __name__ == "__main__":
 
     intent = SearchIntent(
@@ -14,7 +42,7 @@ if __name__ == "__main__":
         exclude_keywords=["QA", "Tester"],
         seniority="junior",
         locations=["Ho Chi Minh"],
-        limit=1
+        limit=2
     )
 
     adapter = TopCVAdapter()
@@ -24,9 +52,4 @@ if __name__ == "__main__":
 
     for i, raw_job in enumerate(raw_jobs, 1):
         normalized = normalizer.normalize(raw_job)
-
-        logger.info("---- Job %d ----", i)
-        logger.info("Canonical title: %s", normalized.canonical_title)
-        logger.info("Skills: %s", ", ".join(normalized.skills))
-        logger.info("Experience:\n%s", pformat(normalized.experience, indent=2))
-        logger.info("Location:\n%s", pformat(normalized.location, indent=2))
+        print_job(normalized, i)

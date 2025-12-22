@@ -6,3 +6,7 @@ day4.ipynb
 day5.ipynb
 Note.docx
 agent/Agent_JobCollection/~$note.docx
+agent/Agent_JobCollection/normalizer/__pycache__/location.cpython-310.pyc
+agent/Agent_Resume/__pycache__/extract_cv.cpython-310.pyc
+agent/Agent_Resume/__pycache__/extraction.cpython-310.pyc
+agent/Agent_Resume/__pycache__/perception.cpython-310.pyc
