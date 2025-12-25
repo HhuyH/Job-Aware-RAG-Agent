@@ -1,4 +1,4 @@
-from .topcv import TopCVAdapter
+from .itviec import ItViecAdapter
 from ..schema import SearchIntent
 from common.logger import get_logger
 
@@ -14,7 +14,7 @@ def main():
         limit=1
     )
 
-    adapter = TopCVAdapter()
+    adapter = ItViecAdapter()
     jobs = adapter.search(intent)
     
     print(f"Collected {len(jobs)} jobs\n")

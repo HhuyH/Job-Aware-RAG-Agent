@@ -1,14 +1,15 @@
 from agent.Agent_JobCollection.adapters.topcv import TopCVAdapter
-from agent.Agent_JobCollection.schema.search_intent import SearchIntent
+from agent.Agent_JobCollection.schema import SearchIntent
 from agent.Agent_JobCollection.normalizer.job_normalizer import JobNormalizer
 from agent.Agent_JobCollection.job_saver import save_jobs
 from common.logger import get_logger
 
 logger = get_logger("agent.job.test")
 
-# Hàm in kết quả
+# Hàm in kết quả job trích được
 def print_job(job, idx):
     print(f"\n{'='*20} Job {idx} {'='*20}")
+    print(f"From platform : {job.platform}")
     print(f"Canonical title : {job.canonical_title}")
     
     print("\nSkills:")
@@ -42,19 +43,25 @@ if __name__ == "__main__":
         exclude_keywords=["QA", "Tester"],
         seniority="junior",
         locations=["Ho Chi Minh"],
-        limit=2
+        limit=3
     )
 
     adapter = TopCVAdapter()
     raw_jobs = adapter.search(intent)
 
     normalizer = JobNormalizer()
-
-    for i, raw_job in enumerate(raw_jobs, 1):
-        normalized = normalizer.normalize(raw_job)
-        print_job(normalized, i)
-        
-    normalized_jobs = [normalizer.normalize(rj) for rj in raw_jobs]
-
+    # for i, raw_job in enumerate(raw_jobs, 1):
+    #     normalized = normalizer.normalize(raw_job)
+    #     print_job(normalized, i)
+    
     # Lưu thông tin job vào file excel và json
+    normalized_jobs = []
+
+    for raw_job in raw_jobs:
+        normalized = normalizer.normalize(raw_job)
+        normalized_jobs.append(normalized)
+
+
     save_jobs(normalized_jobs)
+
+    # print(normalized_jobs)

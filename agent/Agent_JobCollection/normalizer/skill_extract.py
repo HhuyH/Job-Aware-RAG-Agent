@@ -2,7 +2,43 @@ import re
 from typing import List, Dict, Optional
 
 
-# Danh sách skills
+# Trích xuất kỹ năng từ JD
+def extract_skills(
+    text: str,
+    fallback_keywords: Optional[List[str]] = None
+) -> List[str]:
+
+    if not text:
+        text = ""
+
+    text = text.lower()
+    skills_found = set()
+
+    # trích từ raw JD
+    for skill, patterns in SKILL_PATTERNS.items():
+        for pattern in patterns:
+            if re.search(pattern, text):
+                skills_found.add(skill)
+                break
+
+    # Trả về keywork có trong danh sách
+    if fallback_keywords:
+        for kw in fallback_keywords:
+            kw_norm = kw.lower().strip()
+            if kw_norm in SKILL_PATTERNS:
+                skills_found.add(kw_norm)
+
+    # Loại bỏ những từ ko cần thiết
+    skills_cleaned = [
+        s for s in skills_found
+        if s not in NOISE_KEYWORDS
+    ]
+
+    return sorted(skills_cleaned)
+
+# ---------- PATTERNS ----------
+
+# Danh sách skills hiện chỉ giới hạn vài từ khóa đơn giản về python, AI, data...
 SKILL_PATTERNS: Dict[str, List[str]] = {
     #  Core programming 
     "python": [r"\bpython\b"],
@@ -71,37 +107,3 @@ NOISE_KEYWORDS = {
     "english",
     "presentation"
 }
-
-# Trích xuất kỹ năng từ JD
-def extract_skills(
-    text: str,
-    fallback_keywords: Optional[List[str]] = None
-) -> List[str]:
-
-    if not text:
-        text = ""
-
-    text = text.lower()
-    skills_found = set()
-
-    # trích từ raw JD
-    for skill, patterns in SKILL_PATTERNS.items():
-        for pattern in patterns:
-            if re.search(pattern, text):
-                skills_found.add(skill)
-                break
-
-    # Trả về keywork có trong danh sách
-    if fallback_keywords:
-        for kw in fallback_keywords:
-            kw_norm = kw.lower().strip()
-            if kw_norm in SKILL_PATTERNS:
-                skills_found.add(kw_norm)
-
-    # Loại bỏ những từ ko cần thiết
-    skills_cleaned = [
-        s for s in skills_found
-        if s not in NOISE_KEYWORDS
-    ]
-
-    return sorted(skills_cleaned)

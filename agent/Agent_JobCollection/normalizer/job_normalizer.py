@@ -1,11 +1,11 @@
 from typing import Optional, Dict, List
 from dataclasses import dataclass, field
 
-from agent.Agent_JobCollection.schema.raw_job import RawJob
-from agent.Agent_JobCollection.schema.source_meta import SourceMeta
+from ..schema import RawJob
+from ..schema import SourceMeta
 
 from .title import classify_role
-from .jd_text import clean_jd_text
+from .clean_text import clean_jd_text
 from .skill_extract import extract_skills
 from .experience import extract_experience
 from .location import normalize_location
@@ -32,6 +32,7 @@ class NormalizedJob:
 
     # Meta
     source: Optional[SourceMeta] = None
+    platform: Optional[str] = None
     raw_ref: Optional[str] = None  # job id / url
     debug: dict = field(default_factory=dict)
 
@@ -80,8 +81,6 @@ class JobNormalizer:
             location = normalize_location(location_text)
         else:
             location = None
-
-        # print(location_block)
         
         return NormalizedJob(
             title=raw_job.title,
@@ -93,6 +92,7 @@ class JobNormalizer:
             experience=experience,
             location=location,
             source=raw_job.source,
+            platform=raw_job.source.platform if raw_job.source else None,
             raw_ref=raw_job.source.url if raw_job.source else None,
             debug={
                 "raw_title": raw_job.title,

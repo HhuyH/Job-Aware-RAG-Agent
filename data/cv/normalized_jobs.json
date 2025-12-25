@@ -15,12 +15,12 @@
     "location": null,
     "source": {
       "platform": "topcv",
-      "url": "https://www.topcv.vn/brand/techcombank/tuyen-dung/devops-machine-learning-operations-j1994339.html?ta_source=JobSearchList_LinkDetail&u_sr_id=tUhiIdxjdXEtCvOTa6bA2frIyZx6lJxqlTqKwEFt_1766659614",
-      "collected_at": "2025-12-25T10:46:56.766285",
+      "url": "https://www.topcv.vn/brand/techcombank/tuyen-dung/devops-machine-learning-operations-j1994339.html?ta_source=JobSearchList_LinkDetail&u_sr_id=HwZBOZqZditvm8nWenwiKoEFLuMtgqj8nKUmSsZM_1766560100",
+      "collected_at": "2025-12-24T07:08:21.333267",
       "raw_id": null
     },
     "platform": "topcv",
-    "raw_ref": "https://www.topcv.vn/brand/techcombank/tuyen-dung/devops-machine-learning-operations-j1994339.html?ta_source=JobSearchList_LinkDetail&u_sr_id=tUhiIdxjdXEtCvOTa6bA2frIyZx6lJxqlTqKwEFt_1766659614",
+    "raw_ref": "https://www.topcv.vn/brand/techcombank/tuyen-dung/devops-machine-learning-operations-j1994339.html?ta_source=JobSearchList_LinkDetail&u_sr_id=HwZBOZqZditvm8nWenwiKoEFLuMtgqj8nKUmSsZM_1766560100",
     "debug": {
       "raw_title": "DevOps (Machine Learning Operations)",
       "raw_location": "Hồ Chí Minh",
@@ -77,26 +77,26 @@
         "city": "Ho Chi Minh",
         "district": null,
         "ward": "Diên Hồng",
-        "street": null,
+        "street": "Đường Thành Thái",
         "granularity": "address",
-        "confidence": 0.65
+        "confidence": 0.8
       }
     ],
     "source": {
       "platform": "topcv",
-      "url": "https://www.topcv.vn/viec-lam/ai-developer-intern-thuc-tap-sinh-phat-trien-ai/1982468.html?ta_source=JobSearchList_LinkDetail&u_sr_id=tUhiIdxjdXEtCvOTa6bA2frIyZx6lJxqlTqKwEFt_1766659614",
-      "collected_at": "2025-12-25T10:46:57.646313",
+      "url": "https://www.topcv.vn/viec-lam/ai-developer-intern-thuc-tap-sinh-phat-trien-ai/1982468.html?ta_source=JobSearchList_LinkDetail&u_sr_id=HwZBOZqZditvm8nWenwiKoEFLuMtgqj8nKUmSsZM_1766560100",
+      "collected_at": "2025-12-24T07:08:22.136080",
       "raw_id": null
     },
     "platform": "topcv",
-    "raw_ref": "https://www.topcv.vn/viec-lam/ai-developer-intern-thuc-tap-sinh-phat-trien-ai/1982468.html?ta_source=JobSearchList_LinkDetail&u_sr_id=tUhiIdxjdXEtCvOTa6bA2frIyZx6lJxqlTqKwEFt_1766659614",
+    "raw_ref": "https://www.topcv.vn/viec-lam/ai-developer-intern-thuc-tap-sinh-phat-trien-ai/1982468.html?ta_source=JobSearchList_LinkDetail&u_sr_id=HwZBOZqZditvm8nWenwiKoEFLuMtgqj8nKUmSsZM_1766560100",
     "debug": {
       "raw_title": "AI Developer Intern - Thực Tập Sinh Phát Triển AI",
       "raw_location": "Hồ Chí Minh",
       "extracted_keywords": [
-        "nlp",
         "ai",
         "python",
+        "nlp",
         "llm"
       ]
     }
@@ -157,19 +157,19 @@
     ],
     "source": {
       "platform": "topcv",
-      "url": "https://www.topcv.vn/viec-lam/ai-engineer-intern/1776897.html?ta_source=JobSearchList_LinkDetail&u_sr_id=tUhiIdxjdXEtCvOTa6bA2frIyZx6lJxqlTqKwEFt_1766659614",
-      "collected_at": "2025-12-25T10:46:58.614011",
+      "url": "https://www.topcv.vn/viec-lam/ai-engineer-intern/1776897.html?ta_source=JobSearchList_LinkDetail&u_sr_id=HwZBOZqZditvm8nWenwiKoEFLuMtgqj8nKUmSsZM_1766560100",
+      "collected_at": "2025-12-24T07:08:23.042183",
       "raw_id": null
     },
     "platform": "topcv",
-    "raw_ref": "https://www.topcv.vn/viec-lam/ai-engineer-intern/1776897.html?ta_source=JobSearchList_LinkDetail&u_sr_id=tUhiIdxjdXEtCvOTa6bA2frIyZx6lJxqlTqKwEFt_1766659614",
+    "raw_ref": "https://www.topcv.vn/viec-lam/ai-engineer-intern/1776897.html?ta_source=JobSearchList_LinkDetail&u_sr_id=HwZBOZqZditvm8nWenwiKoEFLuMtgqj8nKUmSsZM_1766560100",
     "debug": {
       "raw_title": "AI Engineer Intern",
       "raw_location": "Hồ Chí Minh",
       "extracted_keywords": [
-        "nlp",
         "ai",
         "python",
+        "nlp",
         "llm"
       ]
     }

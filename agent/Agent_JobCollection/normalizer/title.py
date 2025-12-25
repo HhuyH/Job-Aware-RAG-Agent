@@ -1,7 +1,70 @@
 import re
 from typing import Optional, Dict
 
+def normalize_title_text(title: str) -> str:
+    text = title.lower()
 
+    for p in NOISE_PATTERNS:
+        text = re.sub(p, "", text)
+
+    text = re.sub(r"\s+", " ", text).strip()
+    return text
+
+# Trích kinh nghiệm
+def extract_seniority(text: str) -> Optional[str]:
+    for level, pattern in SENIORITY_PATTERNS.items():
+        if re.search(pattern, text):
+            return level
+    return None
+
+# Tách token xữ lý những role bị tách ra và tốm gọn mà chưa được có trong patterns như AI/Robotics engineer
+# Để chuyển vễ kiểu AI engineer, Robotics engineer
+def split_title_tokens(text: str) -> list[str]:
+    parts = re.split(r"[\/\&\|\+,]", text)
+    return [p.strip() for p in parts if p.strip()]
+
+# Trả về role + kinh nghiệm và độ tư tin theo từ khó
+def classify_role(title: str, jd_text: Optional[str] = None) -> Dict:
+    combined_text = f"{title}\n{jd_text or ''}".lower()
+    norm_title = normalize_title_text(title)
+
+    title_tokens = split_title_tokens(norm_title)
+    search_space = " ".join(title_tokens) + "\n" + (jd_text or "").lower()
+
+    matched_roles = []
+
+    for role, patterns in ROLE_PATTERNS.items():
+        for p in patterns:
+            if re.search(p, search_space):
+                matched_roles.append(role)
+                break
+
+    # Lấy role ưu tiên dựa theo vị trị xấp sếp trong patterns
+    role = None
+    for r in ROLE_PRIORITY:
+        if r in matched_roles:
+            role = r
+            break
+
+    seniority = extract_seniority(title.lower())
+
+    # Ước tính mức độ tư tin về role này
+    confidence = 0.0
+    if role:
+        confidence += 0.6
+    if seniority:
+        confidence += 0.2
+    if jd_text:
+        confidence += 0.2
+
+    return {
+        "role": role,
+        "seniority": seniority,
+        "normalized_title": norm_title,
+        "confidence": round(confidence, 2)
+    }
+
+# ---------- PATTERNS ----------
 # Cấp bật
 SENIORITY_PATTERNS = {
     "intern": r"\b(intern|internship|thực\s*tập|tts)\b",
@@ -65,64 +128,3 @@ NOISE_PATTERNS = [
     r"onsite",
     r"tại\s*.*$",
 ]
-def normalize_title_text(title: str) -> str:
-    text = title.lower()
-
-    for p in NOISE_PATTERNS:
-        text = re.sub(p, "", text)
-
-    text = re.sub(r"\s+", " ", text).strip()
-    return text
-
-# Trích kinh nghiệm
-def extract_seniority(text: str) -> Optional[str]:
-    for level, pattern in SENIORITY_PATTERNS.items():
-        if re.search(pattern, text):
-            return level
-    return None
-
-# Tách token xữ lý những role bị tách ra và tốm gọn mà chưa được có trong patterns như AI/Robotics engineer
-def split_title_tokens(text: str) -> list[str]:
-    parts = re.split(r"[\/\&\|\+,]", text)
-    return [p.strip() for p in parts if p.strip()]
-
-# Trả về role + kinh nghiệm và độ tư tin theo từ khó
-def classify_role(title: str, jd_text: Optional[str] = None) -> Dict:
-    combined_text = f"{title}\n{jd_text or ''}".lower()
-    norm_title = normalize_title_text(title)
-
-    title_tokens = split_title_tokens(norm_title)
-    search_space = " ".join(title_tokens) + "\n" + (jd_text or "").lower()
-
-    matched_roles = []
-
-    for role, patterns in ROLE_PATTERNS.items():
-        for p in patterns:
-            if re.search(p, search_space):
-                matched_roles.append(role)
-                break
-
-    # Pick role by priority
-    role = None
-    for r in ROLE_PRIORITY:
-        if r in matched_roles:
-            role = r
-            break
-
-    seniority = extract_seniority(title.lower())
-
-    # Ước tính mức độ tư tin về role này
-    confidence = 0.0
-    if role:
-        confidence += 0.6
-    if seniority:
-        confidence += 0.2
-    if jd_text:
-        confidence += 0.2
-
-    return {
-        "role": role,
-        "seniority": seniority,
-        "normalized_title": norm_title,
-        "confidence": round(confidence, 2)
-    }

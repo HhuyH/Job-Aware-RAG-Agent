@@ -1,13 +1,8 @@
-# agent/Agent_JobCollection/adapters/base.py
-
+# Abstract class bắt buộc raw JD từ tất cả nền tảng điểu phải thống nhất 1 cấu trúc
 from abc import ABC, abstractmethod
 from typing import List
 from datetime import datetime
-
-from agent.Agent_JobCollection.schema.search_intent import SearchIntent
-from agent.Agent_JobCollection.schema.raw_job import RawJob
-from agent.Agent_JobCollection.schema.source_meta import SourceMeta
-
+from ..schema import SearchIntent, RawJob, SourceMeta
 
 class AbstractJobAdapter(ABC):
     """
@@ -36,15 +31,17 @@ class AbstractJobAdapter(ABC):
         """
         raise NotImplementedError
 
-    # OPTIONAL HOOKS 
+    # Cấu trúc source meta(có thể overrdie)
     def build_source_meta(
         self,
         url: str | None = None,
         raw_id: str | None = None
     ) -> SourceMeta:
         """
-        Helper chuẩn hóa metadata nguồn.
-        Adapter con có thể override nếu cần.
+        - platform: tên nền tảng
+        - url: link gốc job
+        - raw_id: id của job trên nền tảng
+        - collected_at: thời gian thu thập
         """
         return SourceMeta(
             platform=self.platform_name,

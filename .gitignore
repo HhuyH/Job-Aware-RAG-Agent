@@ -10,3 +10,15 @@ agent/Agent_JobCollection/normalizer/__pycache__/location.cpython-310.pyc
 agent/Agent_Resume/__pycache__/extract_cv.cpython-310.pyc
 agent/Agent_Resume/__pycache__/extraction.cpython-310.pyc
 agent/Agent_Resume/__pycache__/perception.cpython-310.pyc
+agent/Agent_JobCollection/normalizer/__pycache__/title.cpython-310.pyc
+agent/Agent_JobCollection/normalizer/__pycache__/skill_extract.cpython-310.pyc
+agent/Agent_JobCollection/normalizer/__pycache__/location.cpython-310.pyc
+agent/Agent_JobCollection/normalizer/__pycache__/job_normalizer.cpython-310.pyc
+agent/Agent_JobCollection/normalizer/__pycache__/experience.cpython-310.pyc
+agent/Agent_JobCollection/normalizer/__pycache__/clean_text.cpython-310.pyc
+agent/Agent_JobCollection/normalizer/__pycache__/title.cpython-310.pyc
+agent/Agent_JobCollection/schema/__pycache__/__init__.cpython-310.pyc
+agent/Agent_JobCollection/schema/__pycache__/raw_job.cpython-310.pyc
+agent/Agent_JobCollection/schema/__pycache__/search_intent.cpython-310.pyc
+agent/Agent_JobCollection/schema/__pycache__/source_meta.cpython-310.pyc
+*.pyc

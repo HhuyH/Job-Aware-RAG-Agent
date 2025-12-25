@@ -1,3 +1,5 @@
+# File xác định kinh nghiệm yêu cầu từ JD thông qua các patterns và xác định role yêu cầu từ số năm kinh nghiệm 
+
 import re
 from typing import Optional, Dict, List
 
@@ -27,7 +29,7 @@ def extract_experience(text: str) -> Optional[Dict]:
     maxs: List[float] = []
     levels: set[str] = set()
 
-    # 1. Nếu như không có kinh nghiệm thì ko return sốm vì có thể chỉ là 1 trong số các yêu cầu
+    # Nếu như không có kinh nghiệm thì ko return sốm vì có thể chỉ là 1 trong số các yêu cầu
     for p in NO_EXP_PATTERNS:
         if re.search(p, text_lc):
             signals.append({
@@ -38,7 +40,7 @@ def extract_experience(text: str) -> Optional[Dict]:
             mins.append(0.0)
             maxs.append(0.0)
 
-    # 2. Trả về các kinh nghiệm từ # - # và có dấu +
+    # Trả về các kinh nghiệm từ # - # và có dấu +
     for m in re.finditer(RANGE_PLUS_PATTERN, text_lc):
         min_y = float(m.group("min"))
         mins.append(min_y)
@@ -49,7 +51,7 @@ def extract_experience(text: str) -> Optional[Dict]:
         raw_texts.append(m.group(0))
         levels.update(infer_levels(min_y, None))
 
-    # 3. Trả về kinh nghiệm từ # - #
+    # Trả về kinh nghiệm từ # - #
     for m in re.finditer(RANGE_PATTERN, text_lc):
         min_y = float(m.group("min"))
         max_y = float(m.group("max"))
@@ -62,7 +64,7 @@ def extract_experience(text: str) -> Optional[Dict]:
         raw_texts.append(m.group(0))
         levels.update(infer_levels(min_y, max_y))
 
-    # 4. Tối thiểu # năm kinh nghiệm
+    # Tối thiểu # năm kinh nghiệm
     for m in re.finditer(MIN_PATTERN, text_lc):
         min_y = float(m.group("min"))
         mins.append(min_y)
@@ -73,7 +75,7 @@ def extract_experience(text: str) -> Optional[Dict]:
         raw_texts.append(m.group(0))
         levels.update(infer_levels(min_y, None))
 
-    # 5. trả về kinh nghiệm có dấu +
+    # trả về kinh nghiệm có dấu +
     for m in re.finditer(PLUS_PATTERN, text_lc):
         min_y = float(m.group("min"))
         mins.append(min_y)
@@ -94,7 +96,6 @@ def extract_experience(text: str) -> Optional[Dict]:
         "signals": signals,
         "raw_texts": raw_texts
     }
-
 
 # Xác định cấp bật role từ kinh nghiệm
 def infer_levels(min_years: Optional[float], max_years: Optional[float]) -> List[str]:
@@ -120,10 +121,7 @@ def infer_levels(min_years: Optional[float], max_years: Optional[float]) -> List
 
     return list(levels)
 
-
-
 # ------- PATTERNS -------
-
 # Không yêu cầu kinh nghiệm
 NO_EXP_PATTERNS = [
     r"no experience",

@@ -2,13 +2,13 @@ import re
 from typing import Optional, Dict, List
 
 
-# Chuẩn hóa vị trí từ raw JD
+# Chuẩn hóa vị trí từ JD
 def normalize_location(text: Optional[str]) -> Optional[List[Dict]]:
     if not text:
         return None
 
     raw = text.strip()
-    # Loại bỏ các thông báo kiểu "(đã được cập nhật theo ...)"
+    # Loại bỏ các thông báo kiểu "(đã được cập nhật theo ...)" Cho TopCV
     raw = re.sub(r"\(.*?cập nhật.*?\)", "", raw, flags=re.IGNORECASE)
     # Loại bỏ dấu "-"
     raw = raw.replace("-", " ")
@@ -17,7 +17,7 @@ def normalize_location(text: Optional[str]) -> Optional[List[Dict]]:
     
     # print("Raw location" + raw)
 
-    # Remote
+    # Nếu Job yêu cầu remote thì return lun
     if is_remote(raw_lc):
         return [{
             "raw": raw,
@@ -33,7 +33,7 @@ def normalize_location(text: Optional[str]) -> Optional[List[Dict]]:
 
     locations: List[Dict] = []
 
-    # Cát nhiều vì trí
+    # Cắt nếu có nhiều vì trí
     parts = split_by_city(raw)
     for part in parts:
         loc = normalize_single_location(part.strip())
@@ -42,8 +42,7 @@ def normalize_location(text: Optional[str]) -> Optional[List[Dict]]:
 
     return locations or None
 
-
-# Chuẩn hóa từng vị trí
+# Chuẩn hóa từng vị trí và trích thông tin địa điểm làm việc
 def normalize_single_location(raw: str) -> Optional[List[Dict]]:
     raw_lc = raw.lower()
     
@@ -104,12 +103,15 @@ def normalize_single_location(raw: str) -> Optional[List[Dict]]:
 
     # Nếu confidence quá thấp thì bỏ
     if location["confidence"] < 0.3:
-        return None
+        location["type"] = "unknown"
+        location["granularity"] = "unknown"
+        location["confidence"] = round(location["confidence"], 2)
+        return location
 
     location["confidence"] = round(min(location["confidence"], 1.0), 2)
     return location
 
-# Kiếm tra xem có phải làm từ xa hay không
+# Kiếm tra xem có phải làm từ xa
 def is_remote(text: str) -> bool:
     return any(k in text for k in [
         "remote",
@@ -147,13 +149,57 @@ def extract_ward(text: str) -> Optional[str]:
     return ward
 
 # Trích đường
-def extract_street(text: str) -> Optional[str]:
-    m = STREET_PATTERN.search(text)
-    if m:
-        return clean_street(m.group())
-    if "phường" in text.lower() or "ward" in text.lower():
+def extract_street(text: str, city: Optional[str] = None) -> Optional[str]:
+    text_lc = text.lower()
+
+    # Không có thành phố → không trích street
+    if not city:
         return None
+
+    # bỏ qua nếu chứa keyword không hộp lệ với đường
+    if any(k in text_lc for k in ADMIN_KEYWORDS):
+        return None
+
+    # Ưu tiên tên đường có số
+    street_found = STREET_WITH_NUMBER_PATTERN.search(text)
+    if street_found:
+        return clean_street(street_found.group())
+
+    # chỉ tên đường
+    street_found = STREET_NAME_PATTERN.search(text)
+    if street_found:
+        street = clean_street(street_found.group())
+
+        # tên quá chung → bỏ
+        if len(street.split()) < 2:
+            return None
+
+        return street
+
     return None
+
+# Hàm clean các giá trị ko cần thiết như khoản cách xuống dồng hoặc các ký tự thừa ở đầu và cuối
+def clean_street(street: str) -> str:
+    if not street:
+        return street
+
+    s = street.strip()
+
+    # Gộp nhiều khoảng trắng
+    s = re.sub(r"\s{2,}", " ", s)
+
+    # Bỏ dấu phân cách thừa ở đầu/cuối
+    s = s.strip(" ,.-")
+
+    # Chuẩn hóa prefix (nhẹ, không đoán)
+    s = re.sub(
+        r"^(đường|street|st\.?)\s+",
+        "",
+        s,
+        flags=re.IGNORECASE
+    )
+
+    return s
 
 # Tách các dịa chỉ bằng thành phố
 def split_by_city(raw: str) -> List[str]:
@@ -168,26 +214,20 @@ def split_by_city(raw: str) -> List[str]:
     chunks.append(raw[last:].strip())
     return [c for c in chunks if c]
 
+# Tách dịa chỉ thành nhiều dồng để dê trích xuất quận, phường , đường
 def split_address_segments(text: str) -> list[str]:
+    ""
+    # Ví dụ "12 Nguyễn Huệ, Phường Bến Nghé, Quận 1, Hồ Chí Minh"
+    # Sẽ tách thành
+    #   "12 Nguyễn Huệ",
+    #   "Phường Bến Nghé",
+    #   "Quận 1",
+    #   "Hồ Chí Minh"
+    ""
     return [seg.strip() for seg in text.split(",") if seg.strip()]
 
-# ------- Các hàm làm sách text -------
-# Hàm làm sạch tên đường
-def clean_street(street: str) -> str:
-    # Gộp nhiều khoảng trắng liên tiếp thành một khoảng trắng
-    street = re.sub(r"\s{2,}", " ", street)
-    # Loại bỏ các ký tự phân cách dư ở đầu/cuối
-    return street.strip(",.- ")
 
-# Clean 1 số thứ không cần thiết
-def clean_location_raw(raw: str) -> str:
-    # Loại bỏ các thông báo kiểu "(đã được cập nhật theo ...) của TopCV"
-    raw = re.sub(r"\(.*?cập nhật.*?\)", "", raw, flags=re.IGNORECASE)
-    # Loại bỏ dấu "-"
-    raw = raw.replace("-", " ")
-    return raw.strip()
-
-# ------- PATTERNS -------
+# ---------- PATTERNS ----------
 # Thành phố
 CITY_PATTERNS = {
     "Ho Chi Minh": r"hồ\s*chí\s*minh|tp\.?\s*hcm|hcm\b|ho\s*chi\s*minh",
@@ -209,7 +249,6 @@ WARD_PATTERN = re.compile(
     re.IGNORECASE
 )
 
-
 # Từ khóa ko cần thiết
 INVALID_WARD_KEYWORDS = [
     "hành chính",
@@ -218,7 +257,33 @@ INVALID_WARD_KEYWORDS = [
     "theo",
 ]
 
-# Đường
-STREET_PATTERN = re.compile(
-    r"((?:tầng\s*\d+,\s*)?(?:số\s*\d+,\s*)?(?:đường|street)\s+[A-Za-zÀ-ỹ0-9\s,.-]+)", re.IGNORECASE
+# ----- Các pattern cho việc trích đường -----
+# Tên đường kèm theo số
+STREET_WITH_NUMBER_PATTERN = re.compile(
+    r"""
+    (?:tầng\s*\d+,\s*)?
+    (?:số\s*)?
+    \d+[A-Za-z]?
+    [,\s]+
+    [A-Za-zÀ-ỹ][A-Za-zÀ-ỹ0-9\s.-]{3,}
+    """,
+    re.IGNORECASE | re.VERBOSE
 )
+
+# Tên đường không có số
+STREET_NAME_PATTERN = re.compile(
+    r"""
+    (?:đường\s+)?                 
+    [A-Za-zÀ-ỹ][A-Za-zÀ-ỹ\s.-]{4,}
+    """,
+    re.IGNORECASE | re.VERBOSE
+)
+
+# Các key phải tránh khi trích tên đường
+ADMIN_KEYWORDS = [
+    "phường", "ward",
+    "quận", "district",
+    "huyện",
+    "thành phố", "tp", "city",
+    "việt nam", "vietnam"
+]
