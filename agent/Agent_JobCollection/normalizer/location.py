@@ -77,7 +77,7 @@ def normalize_single_location(raw: str) -> Optional[List[Dict]]:
     for seg in segments:
         if not location["street"]:
             # Trích đường
-            street = extract_street(seg)
+            street = extract_street(seg, location["city"])
             if street:
                 location["street"] = street
                 location["confidence"] += 0.15
@@ -150,20 +150,23 @@ def extract_ward(text: str) -> Optional[str]:
 
 # Trích đường
 def extract_street(text: str, city: Optional[str] = None) -> Optional[str]:
-    text_lc = text.lower()
-
     # Không có thành phố → không trích street
     if not city:
         return None
-
-    # bỏ qua nếu chứa keyword không hộp lệ với đường
-    if any(k in text_lc for k in ADMIN_KEYWORDS):
+    
+    text_lc = text.lower()
+    
+    # Bỏ qua các keyword không hộp lệ với đường và chứa số nhà, tòa nhà...
+    if any(k in text_lc for k in POI_KEYWORDS + ADMIN_KEYWORDS):
         return None
 
-    # Ưu tiên tên đường có số
-    street_found = STREET_WITH_NUMBER_PATTERN.search(text)
-    if street_found:
-        return clean_street(street_found.group())
+    # Bỏ số nhà
+    text = re.sub(
+        r"^\s*\d+[A-Za-z]?(/\d+[A-Za-z]?)?\s+",
+        "",
+        text,
+        flags=re.IGNORECASE
+    )
 
     # chỉ tên đường
     street_found = STREET_NAME_PATTERN.search(text)
@@ -279,6 +282,15 @@ STREET_NAME_PATTERN = re.compile(
     re.IGNORECASE | re.VERBOSE
 )
 
+# Loại bỏ chỉ số nhà tòa nhà...
+POI_KEYWORDS = [
+    "tòa nhà", "building",
+    "tower", "plaza",
+    "center", "centre",
+    "khu", "complex",
+    "số nhà", "house number"
+]
+
 # Các key phải tránh khi trích tên đường
 ADMIN_KEYWORDS = [
     "phường", "ward",
@@ -287,3 +299,4 @@ ADMIN_KEYWORDS = [
     "thành phố", "tp", "city",
     "việt nam", "vietnam"
 ]
+
